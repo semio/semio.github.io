@@ -1,0 +1,15 @@
+name: Semio's Lab
+description: Blogging about Stocks, Market and Trading.
+meta_description: "Your New Jekyll Site, Blogging about stuffs"
+
+markdown: redcarpet
+highlighter: pygments
+logo: false
+paginate: 15
+baseurl: /
+domain_name: 'http://semio.github.io'
+google_analytics: 'UA-4181755-4'
+
+# Details for the RSS feed generator
+url:            'http://semio.github.io'
+author:         'Semio Z'
