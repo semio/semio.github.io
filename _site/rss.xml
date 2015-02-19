@@ -8,5 +8,15 @@
     <title>Semio's Lab</title>
     <link>http://semio.github.io</link>
     <description>Blogging about Stocks, Market and Trading.</description>
+    <pubDate>Thu, 19 Feb 2015 00:00:00 +0800</pubDate>
+    <item>
+      <title>新博客</title>
+      <link>http://semio.github.io/2015/02/19/my-first-post.html</link>
+      <description>&lt;p&gt;认真地写博客这一条已经在我todo列表里面呆了好几年了。也曾经在别的地方开过博客，但是结果还是没能坚持下来。今年我决定再挑战一次，希望至少每周能写一篇有质量的文章。&lt;/p&gt;
+</description>
+      <pubDate>Thu, 19 Feb 2015 00:00:00 +0800</pubDate>
+      <dc:date>2015-02-19T00:00:00+08:00</dc:date>
+    </item>
+    <dc:date>2015-02-19T00:00:00+08:00</dc:date>
   </channel>
 </rss>
