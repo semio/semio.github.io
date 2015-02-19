@@ -841,6 +841,21 @@ body:not(.post-template) .post-title {
     line-height: 1.5em;
 }
 
+/* improvments for code blocks TODO:add line number support*/
+.post-content > .highlight .lineno { 
+    color: #ccc; 
+    display:inline-block; 
+    padding: 0 5px; 
+    border-right:1px solid #ccc; 
+}
+
+.post-content > .highlight pre code { 
+    display: block; 
+    white-space: pre; 
+    overflow-x: auto; 
+    word-wrap: normal; 
+    font-size: 90%;
+}
 
 /* ==========================================================================
    5. Single Post - When you click on an individual post
