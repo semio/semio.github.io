@@ -5,9 +5,9 @@
   xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
   xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
   <channel>
-    <title>Semio's Lab</title>
+    <title>Semio's Notebook</title>
     <link>http://semio.github.io</link>
-    <description>Collections of My Thoughts</description>
+    <description>Collection of My Thoughts</description>
     <pubDate>Thu, 19 Feb 2015 00:00:00 +0800</pubDate>
     <item>
       <title>新博客</title>
