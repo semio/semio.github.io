@@ -1,6 +1,6 @@
 name: Semio's Lab
 description: Blogging about Stocks, Market and Trading.
-meta_description: "Your New Jekyll Site, Blogging about stuffs"
+meta_description: "Blogging about Stocks, Market and Trading."
 
 markdown: redcarpet
 highlighter: pygments
@@ -13,3 +13,4 @@ google_analytics: 'UA-4181755-4'
 # Details for the RSS feed generator
 url:            'http://semio.github.io'
 author:         'Semio Z'
+authorbio:      'Nerd. Love thinking, hacking stuffs. You can find me at <a href="http://weibo.com/s3mi0/" target="blank">@s3mi0</a>.'
