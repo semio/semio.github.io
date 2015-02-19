@@ -8,16 +8,16 @@
     <title>Semio's Lab</title>
     <link>http://semio.github.io</link>
     <description>Blogging about Stocks, Market and Trading.</description>
-    <pubDate>Sun, 10 Nov 2013 18:18:00 +0800</pubDate>
+    <pubDate>Thu, 19 Feb 2015 08:30:00 +0800</pubDate>
     <item>
-      <title>Welcome to Jekyll!</title>
-      <link>http://semio.github.io/thriller/comedy/horror/2013/11/10/welcome-to-jekyll.html</link>
-      <description>&lt;p&gt;You&amp;#39;ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory - edit this post and re-build (or run with the &lt;code&gt;-w&lt;/code&gt; switch) to see your changes!
-To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention: YYYY-MM-DD-name-of-post.ext.&lt;/p&gt;
+      <title>中文测试</title>
+      <link>http://semio.github.io/%E6%B5%8B%E8%AF%95/2015/02/19/CJK-test.html</link>
+      <description>&lt;p&gt;“不去寻找机会的人，最多不过是在走运的叶候得到天上掉下来的馅饼。告诉你我
+为什么能挣到这么多的钱，那是因为我自已有一个公司……” &lt;/p&gt;
 </description>
-      <pubDate>Sun, 10 Nov 2013 18:18:00 +0800</pubDate>
-      <dc:date>2013-11-10T18:18:00+08:00</dc:date>
+      <pubDate>Thu, 19 Feb 2015 08:30:00 +0800</pubDate>
+      <dc:date>2015-02-19T08:30:00+08:00</dc:date>
     </item>
-    <dc:date>2013-11-10T18:18:00+08:00</dc:date>
+    <dc:date>2015-02-19T08:30:00+08:00</dc:date>
   </channel>
 </rss>
