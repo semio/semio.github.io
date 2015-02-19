@@ -1,5 +1,5 @@
-name: Semio's Lab
-description: Collections of My Thoughts
+name: Semio's Notebook
+description: Collection of My Thoughts
 meta_description: "Blogging about Technologies, Stock Market/Trading."
 
 markdown: redcarpet
@@ -13,4 +13,4 @@ google_analytics: 'UA-4181755-4'
 # Details for the RSS feed generator
 url:            'http://semio.github.io'
 author:         'Semio Z'
-authorbio:      'Nerd. Love thinking, hacking stuffs. You can find me at <a href="http://weibo.com/s3mi0/" target="blank">@s3mi0</a>.'
+authorbio:      'Nerd. Love thinking, hacking stuffs. You can reache me at <a href="http://weibo.com/s3mi0/" target="blank">@s3mi0</a>.'
