@@ -1,6 +1,6 @@
 name: Semio's Lab
-description: Blogging about Stocks, Market and Trading.
-meta_description: "Blogging about Stocks, Market and Trading."
+description: Collections of My Thoughts
+meta_description: "Blogging about Technologies, Stock Market/Trading."
 
 markdown: redcarpet
 highlighter: pygments
