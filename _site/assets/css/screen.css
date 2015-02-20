@@ -176,7 +176,7 @@ html {
 body {
     height: 100%;
     max-height: 100%;
-    font-family: "Roboto", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", serif;
+    font-family: "Robotos", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", serif;
     letter-spacing: 0.01rem;
     font-size: 1.8rem;
     line-height: 1.75em;
@@ -356,6 +356,7 @@ pre code, tt {
     background: transparent;
     border: none;
     padding: 0;
+    line-height: 1.2;
 }
 
 kbd {
@@ -904,6 +905,11 @@ body:not(.post-template) .post-title {
     height: auto;
     margin: 0 auto;
     padding: 0.6em 0;
+}
+
+.post-content img.emoji {
+    display: inline;
+    padding: 0 0 5px 0;
 }
 
 /* Break out larger images to be wider than the main text column
