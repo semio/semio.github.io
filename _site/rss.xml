@@ -8,14 +8,14 @@
     <title>Semio's Notebook</title>
     <link>http://semio.github.io</link>
     <description>Collection of My Thoughts</description>
-    <pubDate>Fri, 20 Feb 2015 20:30:59 +0800</pubDate>
+    <pubDate>Fri, 20 Feb 2015 21:26:28 +0800</pubDate>
     <item>
       <title>我的金融工程工具箱</title>
-      <link>http://semio.github.io/2015/02/20/my-quant-toolbox.html</link>
-      <description>&lt;p&gt;说是金融工程工具箱，其实只涉及到程序化交易的相关工具（我要当一枚P quant :grimacing:）。下面分几类列一下我的工具箱，这篇日志会持续更新。&lt;/p&gt;
+      <link>http://semio.github.io/quant/2015/02/20/my-quant-toolbox.html</link>
+      <description>&lt;p&gt;总结一下我用过的金融市场相关的工具&lt;/p&gt;
 </description>
-      <pubDate>Fri, 20 Feb 2015 20:30:59 +0800</pubDate>
-      <dc:date>2015-02-20T20:30:59+08:00</dc:date>
+      <pubDate>Fri, 20 Feb 2015 21:26:28 +0800</pubDate>
+      <dc:date>2015-02-20T21:26:28+08:00</dc:date>
     </item>
     <item>
       <title>新博客</title>
@@ -25,6 +25,6 @@
       <pubDate>Thu, 19 Feb 2015 00:00:00 +0800</pubDate>
       <dc:date>2015-02-19T00:00:00+08:00</dc:date>
     </item>
-    <dc:date>2015-02-20T20:30:59+08:00</dc:date>
+    <dc:date>2015-02-20T21:26:28+08:00</dc:date>
   </channel>
 </rss>

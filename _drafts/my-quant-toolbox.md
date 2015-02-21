@@ -1,6 +1,8 @@
 ---
 layout: post
 title: 我的金融工程工具箱
+categories: quant
+excerpt: 总结一下我用过的金融市场相关的工具
 ---
 
 说是金融工程工具箱，其实只涉及到程序化交易的相关工具（我要当一枚P quant :grimacing:）。下面分几类列一下我的工具箱，这篇日志会持续更新。
@@ -19,6 +21,7 @@ title: 我的金融工程工具箱
 ```python
 from StringIO import StringIO
 import pandas as pd
+import requests
 
 def download(stock):
     xueqiu_l1 = "http://xueqiu.com/S/"
@@ -41,9 +44,9 @@ def download(stock):
 
 程序化和高频交易在华尔街流行之后，出现了很多开源的程序化交易工具，其中最多的编程语言有python和R。我个人主要用的是python（另外也很关注最近新出的[Julia](http://julialang.org/)语言），所以以下只介绍python相关的库：
 
-1. [zipline](https://github.com/quantopian/zipline)：Quantopian使用的回测程序
-2. [prophet](http://prophet.michaelsu.io)：简单易学的api，还在beta阶段
-3. [pyalgotrade](https://github.com/gbeced/pyalgotrade)： 事件驱动，我还没有用过，以后会试试
+* [zipline](https://github.com/quantopian/zipline)：Quantopian使用的回测程序
+* [prophet](http://prophet.michaelsu.io)：简单易学的api，还在beta阶段
+* [pyalgotrade](https://github.com/gbeced/pyalgotrade)： 事件驱动，我还没有用过，以后会试试
 
 个人更加喜欢像prophet这样的microframework，使用起来非常直观，限制更少而且代码重用性也很高。
 

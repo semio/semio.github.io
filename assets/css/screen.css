@@ -176,7 +176,7 @@ html {
 body {
     height: 100%;
     max-height: 100%;
-    font-family: "Robotos", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", serif;
+    font-family: "Gentium Book Basic", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", serif;
     letter-spacing: 0.01rem;
     font-size: 1.8rem;
     line-height: 1.75em;
@@ -340,8 +340,8 @@ pre {
     margin: 0 0 1.75em 0;
     border: #E3EDF3 1px solid;
     width: 100%;
-    padding: 10px;
-    font-family: Inconsolata, monospace, sans-serif;
+    padding: 15px;
+    font-family: Monaco, 'DejaVu Sans Mono', 'Courier New', monospace, sans-serif;
     font-size: 0.9em;
     white-space: pre;
     overflow: auto;
@@ -855,7 +855,6 @@ body:not(.post-template) .post-title {
     white-space: pre; 
     overflow-x: auto; 
     word-wrap: normal; 
-    font-size: 90%;
 }
 
 /* ==========================================================================
@@ -1178,6 +1177,10 @@ body:not(.post-template) .post-title {
     color: #50585D;
     letter-spacing: 0;
     text-indent: 0;
+}
+
+.author p {
+    font-family: "Open Sans", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", sans-serif;
 }
 
 .author-meta {
