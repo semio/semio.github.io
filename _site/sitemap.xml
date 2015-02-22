@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://semio.github.io/quant/2015/02/22/my-quant-toolbox.html</loc>
+    <lastmod>2015-02-22T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://semio.github.io/2015/02/19/my-first-post.html</loc>
     <lastmod>2015-02-19T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://semio.github.io/quant/2014/02/22/my-quant-toolbox.html</loc>
-    <lastmod>2014-02-22T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>http://semio.github.io/</loc>
-    <lastmod>2015-02-22T23:45:46+08:00</lastmod>
+    <lastmod>2015-02-22T23:49:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
