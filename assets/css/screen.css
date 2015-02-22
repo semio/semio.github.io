@@ -857,6 +857,12 @@ body:not(.post-template) .post-title {
     word-wrap: normal; 
 }
 
+/* list improvments */
+
+.post-content li p{
+    margin: 0;
+}
+
 /* ==========================================================================
    5. Single Post - When you click on an individual post
    ========================================================================== */

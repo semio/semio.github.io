@@ -8,15 +8,7 @@
     <title>Semio's Notebook</title>
     <link>http://semio.github.io</link>
     <description>Collection of My Thoughts</description>
-    <pubDate>Fri, 20 Feb 2015 21:26:28 +0800</pubDate>
-    <item>
-      <title>我的金融工程工具箱</title>
-      <link>http://semio.github.io/quant/2015/02/20/my-quant-toolbox.html</link>
-      <description>&lt;p&gt;总结一下我用过的金融市场相关的工具&lt;/p&gt;
-</description>
-      <pubDate>Fri, 20 Feb 2015 21:26:28 +0800</pubDate>
-      <dc:date>2015-02-20T21:26:28+08:00</dc:date>
-    </item>
+    <pubDate>Thu, 19 Feb 2015 00:00:00 +0800</pubDate>
     <item>
       <title>新博客</title>
       <link>http://semio.github.io/2015/02/19/my-first-post.html</link>
@@ -25,6 +17,14 @@
       <pubDate>Thu, 19 Feb 2015 00:00:00 +0800</pubDate>
       <dc:date>2015-02-19T00:00:00+08:00</dc:date>
     </item>
-    <dc:date>2015-02-20T21:26:28+08:00</dc:date>
+    <item>
+      <title>我的金融工程工具箱</title>
+      <link>http://semio.github.io/quant/2014/02/22/my-quant-toolbox.html</link>
+      <description>&lt;p&gt;说是金融工程工具箱，其实只涉及到程序化交易的相关工具。这也是我学习程序化交易的一点阶段总结。&lt;/p&gt;
+</description>
+      <pubDate>Sat, 22 Feb 2014 00:00:00 +0800</pubDate>
+      <dc:date>2014-02-22T00:00:00+08:00</dc:date>
+    </item>
+    <dc:date>2015-02-19T00:00:00+08:00</dc:date>
   </channel>
 </rss>
