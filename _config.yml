@@ -13,7 +13,7 @@ google_analytics: 'UA-4181755-4'
 # Details for the RSS feed generator
 url:            'http://semio.github.io'
 author:         'Semio Z'
-authorbio:      'Nerd. Love thinking, hacking stuffs. You can reache me at <a href="http://weibo.com/s3mi0/" target="blank">@s3mi0</a>.'
+authorbio:      '小散一枚。新浪微博：<a href="http://weibo.com/s3mi0/" target="blank">@s3mi0</a>.'
 
 gems:
 - jekyll-mentions

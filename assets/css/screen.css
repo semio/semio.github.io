@@ -675,7 +675,7 @@ margin on the iframe, cause it breaks stuff. */
     font-size: 2rem;
     line-height: 1.5em;
     font-weight: 400;
-    font-family: "Merriweather", serif;
+    font-family: Georgia, serif;
     letter-spacing: 0.01rem;
     color: rgba(255,255,255,0.8);
 }
@@ -923,6 +923,17 @@ body:not(.post-template) .post-title {
     width: 126%;
     max-width: none;
     margin: 0 -13%;
+}
+
+/* styling figcaption if exists */
+.post-content figcaption {
+    display: block;
+    margin: 0;
+    max-width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #aaa;
+    font-family: Georgia, serif;
 }
 
 /* The author credit area after the post */
@@ -1195,7 +1206,7 @@ body:not(.post-template) .post-title {
 /* Location, website, and link */
 .author-profile .author-meta {
     margin: 2rem 0;
-    font-family: "Merriweather", serif;
+    font-family: Georgia, serif;
     letter-spacing: 0.01rem;
     font-size: 1.7rem;
 }
