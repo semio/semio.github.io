@@ -8,7 +8,15 @@
     <title>Semio's Notebook</title>
     <link>http://semio.github.io</link>
     <description>Collection of My Thoughts</description>
-    <pubDate>Sun, 22 Feb 2015 00:00:00 +0800</pubDate>
+    <pubDate>Sun, 08 Mar 2015 00:00:00 +0800</pubDate>
+    <item>
+      <title>关于投资思路</title>
+      <link>http://semio.github.io/trading/2015/03/08/my-road-on-investing.html</link>
+      <description>&lt;p&gt;从刚开始接触股票市场到现在已经6年了，我也经历了从学习各种投资方法到拥有一个相对固定的思路的过程。本文主要为记录下我所学过的方法论和我现在的偏好。&lt;/p&gt;
+</description>
+      <pubDate>Sun, 08 Mar 2015 00:00:00 +0800</pubDate>
+      <dc:date>2015-03-08T00:00:00+08:00</dc:date>
+    </item>
     <item>
       <title>我的金融工程工具箱</title>
       <link>http://semio.github.io/quant/2015/02/22/my-quant-toolbox.html</link>
@@ -25,6 +33,6 @@
       <pubDate>Thu, 19 Feb 2015 00:00:00 +0800</pubDate>
       <dc:date>2015-02-19T00:00:00+08:00</dc:date>
     </item>
-    <dc:date>2015-02-22T00:00:00+08:00</dc:date>
+    <dc:date>2015-03-08T00:00:00+08:00</dc:date>
   </channel>
 </rss>
