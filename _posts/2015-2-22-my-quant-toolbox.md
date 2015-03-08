@@ -22,7 +22,7 @@ excerpt: <p>说是金融工程工具箱，其实只涉及到程序化交易的�
 
 雪球的日线数据可以这样调用：
 
-{% highlight python %}
+``` python
 from StringIO import StringIO
 import pandas as pd
 import requests
@@ -38,7 +38,7 @@ def download(stock):
     
     res = pd.DataFrame.from_csv(StringIO(r.content), index_col=1, parse_dates=True)
     return res
-{% endhighlight %}
+```
 
 然后```sh000001 = download('sh000001')```就可以了。
 

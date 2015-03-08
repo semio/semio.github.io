@@ -26,3 +26,4 @@ kramdown:
   enable_coderay: true
   coderay_line_numbers: nil
   coderay_tab_width: 4
+  coderay_css: class
