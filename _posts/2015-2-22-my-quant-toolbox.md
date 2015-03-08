@@ -32,7 +32,7 @@ def download(stock):
     header = {
         "User-Agent" : 
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"
-    } # 雪球前段时间遭到攻击，对http请求进行了过滤，加上user agent绕过。
+    } # 不加http header会禁止访问
     
     r = requests.get(link, headers=header)
     
