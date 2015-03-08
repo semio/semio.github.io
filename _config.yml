@@ -2,7 +2,7 @@ name: Semio's Notebook
 description: Collection of My Thoughts
 meta_description: "Blogging about Technologies, Stock Market/Trading."
 
-markdown: kramdown
+markdown: redcarpet
 highlighter: pygments
 logo: false
 paginate: 15
@@ -27,3 +27,6 @@ kramdown:
   coderay_line_numbers: nil
   coderay_tab_width: 4
   coderay_css: class
+
+redcarpet:
+  extensions: ["footnotes", "no_intra_emphasis", "tables", "strikethrough"]
