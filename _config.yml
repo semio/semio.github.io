@@ -29,4 +29,4 @@ kramdown:
   coderay_css: class
 
 redcarpet:
-  extensions: ["footnotes", "no_intra_emphasis", "tables", "strikethrough"]
+  extensions: ["footnotes", "no_intra_emphasis", "tables", "strikethrough", "autolink"]

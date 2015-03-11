@@ -20,7 +20,9 @@ categories: trading
 
 ## 技术分析 vs. 价值投资
 
-这些年的另一个变化是，我开始去了解基本面的信息了。以前我是一个纯技术分析派，我认为一只股票的所有信息，都会在股价和成交量中体现出来。股票价格变化的关键，一是流动性，二是估值[^2]。流动性也许能从成交数据中看出来，但估值这东西就不同了，一个公司的“质地”和是否低估很难从价格反映出来，因为市场有时候是错误的（这种错误也正是投资的好机会）。于是我现在开始关注怎样选择质地较好的公司。这方面我做的功课还很少，现在主要是利用[这篇文章](http://blog.sina.com.cn/s/blog_4c6a80960102egud.html)所描述的CANSLIM法则为框架。总之，选择低估的标的，配合技术分析在趋势产生时介入。[戴维斯双击](http://wiki.mbalib.com/wiki/%E6%88%B4%E7%BB%B4%E6%96%AF%E5%8F%8C%E6%9D%80%E6%95%88%E5%BA%94)。
+这些年的另一个变化是，我开始去了解基本面的信息了。以前我是一个纯技术分析派，我认为一只股票的所有信息，都会在股价和成交量中体现出来。股票价格变化的关键，一是流动性，二是估值[^2]。流动性也许能从成交数据中看出来，但估值这东西就不同了，一个公司的“质地”和是否低估很难从价格反映出来，因为市场有时候是错误的（这种错误也正是投资的好机会）。于是我现在开始关注怎样选择质地较好的公司。这方面我做的功课还很少，现在主要是利用[这篇文章](http://blog.sina.com.cn/s/blog_4c6a80960102egud.html)所描述的CANSLIM法则为框架。（update： 最近发现一本关于量化价值投资的书[Quantitive Value](https://www.quantopian.com/posts/acquirers-multiple-based-on-deep-value-number-fundamentals?utm_source=All+Active+Members&utm_campaign=d5e5d08663-15-03-03-new+users-+offerExpirationLastOne&utm_medium=email&utm_term=0_7cca55778a-d5e5d08663-98356081)，有空要读读）
+
+总之，选择低估的标的，配合技术分析在趋势产生时介入。[戴维斯双击](http://wiki.mbalib.com/wiki/%E6%88%B4%E7%BB%B4%E6%96%AF%E5%8F%8C%E6%9D%80%E6%95%88%E5%BA%94)。
 
 ## one more thing
 
@@ -33,7 +35,7 @@ categories: trading
 [^1]: 准确地说，我是为了学习人工智能才拿股票市场来研究的，所以必须找到可以量化的工具
 [^2]: 来自[《投资中最简单的事》](http://book.douban.com/subject/26163553/)
 [^zhihu1]: [金融是不是一群不事生产的人，对社会毫无贡献的人，互相对赌的零和游戏？](http://zhuanlan.zhihu.com/wontfallinyourlap/19960266)
-[^zhihu2]: 参考这个[知乎讨论](http://zhi.hu/Qcjf)，其实我挺怀疑这个结论..
+[^zhihu2]: 参考这个[知乎问题](http://zhi.hu/Qcjf)，和这个[Quora问题](https://www.quora.com/Is-capitalism-a-zero-sum-game)
         
 
 
