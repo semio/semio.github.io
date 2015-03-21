@@ -326,7 +326,7 @@ mark {
 
 code, tt {
     padding: 1px 3px;
-    font-family: Menlo, monospace, sans-serif;
+    font-family: 'Source Code Pro', monospace, sans-serif;
     font-size: 0.8em;
     white-space: pre-wrap;
     border: #E3EDF3 1px solid;
@@ -342,7 +342,7 @@ pre {
     width: 100%;
     padding: 15px;
     font-family: Monaco, 'DejaVu Sans Mono', 'Courier New', monospace, sans-serif;
-    font-size: 1.4rem;
+    font-size: 0.8em;
     white-space: pre;
     overflow: auto;
     background: #F7FAFB;
@@ -886,7 +886,7 @@ body:not(.post-template) .post-title {
    ========================================================================== */
 
 .post-template .post-header {
-   margin-bottom: 3.4rem;
+   margin-bottom: 6.4rem;
 }
 
 .post-template .post-title {
