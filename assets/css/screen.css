@@ -249,7 +249,7 @@ p, ul, ol, dl {
 }
 
 ol, ul {
-    padding-left: 3rem;
+    padding-left: 6rem;
 }
 
 ol ol, ul ul,
@@ -326,8 +326,8 @@ mark {
 
 code, tt {
     padding: 1px 3px;
-    font-family: Inconsolata, monospace, sans-serif;
-    font-size: 0.85em;
+    font-family: Menlo, monospace, sans-serif;
+    font-size: 0.8em;
     white-space: pre-wrap;
     border: #E3EDF3 1px solid;
     background: #F7FAFB;
@@ -342,7 +342,7 @@ pre {
     width: 100%;
     padding: 15px;
     font-family: Monaco, 'DejaVu Sans Mono', 'Courier New', monospace, sans-serif;
-    font-size: 0.9em;
+    font-size: 1.4rem;
     white-space: pre;
     overflow: auto;
     background: #F7FAFB;
@@ -454,7 +454,7 @@ margin on the iframe, cause it breaks stuff. */
 .inner {
     position: relative;
     width: 80%;
-    max-width: 710px;
+    max-width: 670px;
     margin: 0 auto;
 }
 
