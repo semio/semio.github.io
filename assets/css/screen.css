@@ -176,7 +176,7 @@ html {
 body {
     height: 100%;
     max-height: 100%;
-    font-family: "Roboto", "Source Han Sans SC", "思源黑体", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", serif;
+    font-family: "Roboto Slab", "Source Han Sans SC", "思源黑体", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", serif;
     letter-spacing: 0.02rem;
     font-size: 1.8rem;
     line-height: 1.75em;
@@ -331,7 +331,6 @@ code, tt {
     white-space: pre-wrap;
     border: #E3EDF3 1px solid;
     background: #F7FAFB;
-    border-radius: 2px;
 }
 
 pre {
@@ -341,12 +340,10 @@ pre {
     border: #E3EDF3 1px solid;
     width: 100%;
     padding: 15px;
-    font-family: Monaco, 'DejaVu Sans Mono', 'Courier New', monospace, sans-serif;
     font-size: 0.8em;
-    white-space: pre;
-    overflow: auto;
+    white-space: pre-wrap;
     background: #F7FAFB;
-    border-radius: 3px;
+    overflow: auto;
 }
 
 pre code, tt {
