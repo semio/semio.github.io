@@ -326,7 +326,7 @@ mark {
 
 code, tt {
     padding: 1px 3px;
-    font-family: 'Source Code Pro', monospace, sans-serif;
+    font-family: 'Source Code Pro', Consolas, monospace, sans-serif;
     font-size: 0.8em;
     white-space: pre-wrap;
     border: #E3EDF3 1px solid;
