@@ -202,6 +202,7 @@ h4, h5, h6 {
     color: #2E2E2E;
     line-height: 1.15em;
     margin: 0 0 0.4em 0;
+    padding-top: 1em;
     font-family: "Cabin", "Source Han Sans SC", "思源黑体", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", sans-serif;
 }
 
@@ -209,6 +210,7 @@ h1 {
     font-size: 5rem;
     letter-spacing: -2px;
     text-indent: -3px;
+    padding: 0;
 }
 
 h2 {
@@ -245,7 +247,7 @@ p, ul, ol, dl {
     -webkit-font-feature-settings: 'liga' 1, 'onum' 1, 'kern' 1;
     -moz-font-feature-settings: 'liga' 1, 'onum' 1, 'kern' 1;
     -o-font-feature-settings: 'liga' 1, 'onum' 1, 'kern' 1;
-    margin: 0 0 1.75em 0;
+    margin: 0 0 1.3em 0;
 }
 
 ol, ul {
@@ -301,7 +303,7 @@ blockquote {
 }
 
 blockquote p {
-    margin: 0.8em 0;
+    margin: 0.6em 0;
     font-style: italic;
 }
 
@@ -841,16 +843,16 @@ body:not(.post-template) .post-title {
 }
 
 /* improvments for code blocks TODO:add line number support*/
-.post-content > .highlight .lineno { 
-    color: #ccc; 
-    display:inline-block; 
-    padding: 0 5px; 
-    border-right:1px solid #ccc; 
+.post-content > .highlight .lineno {
+    color: #ccc;
+    display:inline-block;
+    padding: 0 5px;
+    border-right:1px solid #ccc;
 }
 
-.post-content > .highlight pre code { 
-    display: block; 
-    white-space: pre-wrap; 
+.post-content > .highlight pre code {
+    display: block;
+    white-space: pre-wrap;
     word-wrap: normal;
 }
 
@@ -960,13 +962,13 @@ body:not(.post-template) .post-title {
 }
 
 .post-footer h4 {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     margin: 0;
 }
 
 .post-footer p {
     margin: 1rem 0;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     line-height: 1.75em;
 }
 
@@ -1014,9 +1016,9 @@ body:not(.post-template) .post-title {
 }
 
 .post-footer .share a {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     display: inline-block;
-    margin: 1rem 1.6rem 1.6rem 0;
+    margin: 1rem 1.2rem 1.6rem 0;
     color: #BBC7CC;
     text-decoration: none;
 }
@@ -1445,24 +1447,24 @@ body:not(.post-template) .post-title {
     }
 
     h1 {
-        font-size: 4.5rem;
+        font-size: 3.5rem;
         text-indent: -2px;
     }
 
     h2 {
-        font-size: 3.6rem;
+        font-size: 3.3rem;
     }
 
     h3 {
-        font-size: 3.1rem;
+        font-size: 2.8rem;
     }
 
     h4 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     h5 {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
     h6 {
