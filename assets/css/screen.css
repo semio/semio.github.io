@@ -749,6 +749,10 @@ body:not(.post-template) .post-title {
     font-size: 3.6rem;
 }
 
+.post-title {
+  padding: 0;
+}
+
 .post-title a {
     text-decoration: none;
 }
