@@ -1,7 +1,9 @@
 ---
 title: 股票数据下载器
 layout: post
-categories: tools, trading
+categories:
+    - tools
+    - trading
 excerpt: <p>最近开始着手写一个A股的股票数据下载工具，用于获取基本面和价格等信息。</p>
 ---
 

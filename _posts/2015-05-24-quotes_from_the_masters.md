@@ -1,7 +1,8 @@
 ---
 title: 我喜爱的投资语录
 layout: post
-categories: quotes, stock
+categories: quotes
+tags: quotes stock
 excerpt: <p>Money always comes through knowledge. 看看大师们是怎样看待市场的。</p>
 ---
 

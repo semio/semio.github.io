@@ -176,7 +176,7 @@ html {
 body {
     height: 100%;
     max-height: 100%;
-    font-family: "Roboto Slab", "Source Han Sans SC", "思源黑体", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", serif;
+    font-family: "Cabin", "Source Han Sans SC", "思源黑体", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", serif;
     letter-spacing: 0.02rem;
     font-size: 1.8rem;
     line-height: 1.75em;
@@ -674,7 +674,7 @@ margin on the iframe, cause it breaks stuff. */
     font-size: 2rem;
     line-height: 1.5em;
     font-weight: 400;
-    font-family: "Roboto Slab", Georgia, serif;
+    font-family: "Cabin", Georgia, serif;
     letter-spacing: 0.01rem;
     color: rgba(255,255,255,0.8);
 }

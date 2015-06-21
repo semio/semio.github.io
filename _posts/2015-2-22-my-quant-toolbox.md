@@ -50,13 +50,13 @@ def download(stock):
 
 * 基本
     * [IPython](http://ipython.org/)：python命令行，notebook模式太好用了
+    * [ob-ipython](https://github.com/gregsexton/ob-ipython): 在Org-mode下面使用IPython代码块
     * [pandas](pandas.pydata.org)：数据分析标配，华尔街大佬做的
     * [matplotlib](matplotlib.org)/[mpld3](https://mpld3.github.io)/[bokeh](bokeh.pydata.org)： 数据可视化
 * 回测
     * [zipline](https://github.com/quantopian/zipline)：Quantopian使用的回测程序
     * [prophet](http://prophet.michaelsu.io)：简单易学的api，还在beta阶段
     * [pyalgotrade](https://github.com/gbeced/pyalgotrade)： 事件驱动，我还没有用过，以后会试试
-    * PS: 个人更加喜欢像prophet这样的microframework，使用起来非常直观，限制更少而且代码重用性也很高。
 * 数学模型
     * 参见[这里](https://github.com/vinta/awesome-python#science-and-data-analysis)
 * 技术分析
