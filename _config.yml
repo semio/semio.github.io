@@ -5,14 +5,14 @@ meta_description: "Blogging about Technologies, Stock Market/Trading."
 markdown: redcarpet
 highlighter: pygments
 logo: false
-paginate: 15
+paginate: 5
 baseurl: /
 domain_name: 'http://semio.github.io'
 google_analytics: 'UA-4181755-4'
 
 # Details for the RSS feed generator
 url:            'http://semio.github.io'
-author:         'Semio Z'
+author:         'Semio'
 authorbio:      '小散一枚。新浪微博：<a href="http://weibo.com/s3mi0/" target="blank">@s3mi0</a>.'
 
 gems:
