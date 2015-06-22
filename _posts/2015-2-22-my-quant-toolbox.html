@@ -1,0 +1,135 @@
+---
+layout: post
+title: 我的金融工程工具箱
+excerpt:  说是金融工程工具箱，其实只涉及到程序化交易的相关工具。这也是我学习程序化交易的一点阶段总结。
+tags:
+  - quant
+categories:
+  - quant
+---
+<p>
+说是金融工程工具箱，其实只涉及到程序化交易的相关工具（我要当一枚P quant
+:grimacing:）。下面分几类列一下我的用过的工具，这篇日志会持续更新。
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Paper Trading</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这里的paper trading是指纯手动的模拟交易。为什么把paper
+trading工具摆在第一位，因为股票交易做为一种技能，在进入实盘之前进行大量的练习十分有益；而对于金融工程或者经济研究者，也能通过观察数据，和动手实践来获得灵感。对我来说模拟交易也是一个很好玩的游戏，经常没事就打开来刷刷。我常用的paper
+trading工具有：
+</p>
+
+<ul class="org-ul">
+<li><a href="https://itunes.apple.com/cn/app/chartiq-practice-trading-simulator/id517702104?l=en&mt=8">ChartIQ</a>：功能丰富，可惜只支持US的股票
+</li>
+<li>国内的部分看盘软件如<a href="http://10jkqa.com.cn">同花顺</a>也有提供类似功能，但是功能没有ChartIQ丰富。而且会显示日期股票名称，对A股熟悉的人基本会知道后面的行情。。。
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">数据源</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+我暂时只用到A股的日线历史数据，收费的没用过，免费的用过Yahoo和雪球的API。Yahoo的优点是历史悠久很多相关的library，缺点是数据质量不是很好。雪球跟yahoo相反，数据完整但是调用起来不够方便。
+</p>
+
+<p>
+当下的财务数据也可以通过雪球的json
+api获取，但是暂时没有发现能不能调用历史数据。
+</p>
+
+<p>
+<del>雪球的日线数据可以这样调用：</del> 已经失效
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #e00036;">from</span> <span style="color: #0072ff;">StringIO</span> <span style="color: #c60000;">import</span> <span style="color: #0072ff;">StringIO</span>
+<span style="color: #c60000;">import</span> <span style="color: #db0074;">pandas</span> <span style="color: #007bca;">as</span> <span style="color: #007300;">pd</span>
+<span style="color: #c60000;">import</span> <span style="color: #007b8c;">requests</span>
+
+<span style="color: #007000;">def</span> <span style="color: #0064ff;">download</span><span style="color: #707183;">(</span><span style="color: #cd0000;">stock</span><span style="color: #707183;">)</span>:
+    <span style="color: #c40000;">link</span> = <span style="color: #008000;">"http://xueqiu.com/S/%s/historical.csv"</span> % <span style="color: #cd0000;">stock</span>
+    <span style="color: #007400;">header</span> = <span style="color: #707183;">{</span>
+        <span style="color: #008000;">"User-Agent"</span> : 
+        <span style="color: #008000;">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"</span>
+    <span style="color: #707183;">}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">&#19981;&#21152;http header&#20250;&#31105;&#27490;&#35775;&#38382;</span>
+
+    <span style="color: #0066ff;">r</span> = <span style="color: #007b8c;">requests</span>.<span style="color: #4d6800;">get</span><span style="color: #707183;">(</span><span style="color: #c40000;">link</span>, <span style="color: #6b35e2;">headers</span>=<span style="color: #007400;">header</span><span style="color: #707183;">)</span>
+
+    <span style="color: #0068ff;">res</span> = <span style="color: #007300;">pd</span>.<span style="color: #007bab;">DataFrame</span>.<span style="color: #bc1600;">from_csv</span><span style="color: #707183;">(</span><span style="color: #0072ff;">StringIO</span><span style="color: #7388D6;">(</span><span style="color: #0066ff;">r</span>.<span style="color: #0079f3;">content</span><span style="color: #7388D6;">)</span>, <span style="color: #5b6400;">index_col</span>=<span style="color: #D0372D;">1</span>, <span style="color: #c10000;">parse_dates</span>=<span style="color: #D0372D;">True</span><span style="color: #707183;">)</span>
+    <span style="color: #007ba4;">return</span> <span style="color: #0068ff;">res</span>
+</pre>
+</div>
+
+<p>
+然后 <code>sh000001 = download('sh000001')</code> 就可以了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">开发环境</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+程序化和高频交易流行之后，出现了很多开源的程序化交易工具，其中编程语言使用率最多的要数python和R了。我个人主要用的是python，所以以下只介绍python相关的库。
+</p>
+
+<ul class="org-ul">
+<li>基本
+
+<ul class="org-ul">
+<li><a href="http://ipython.org/">IPython</a>：python命令行，notebook模式太好用了
+</li>
+<li><a href="https://github.com/gregsexton/ob-ipython">ob-ipython</a>:
+在Org-mode下面使用IPython代码块
+</li>
+<li><a href="http://pandas.pydata.org">pandas</a>：数据分析标配，华尔街大佬做的
+</li>
+<li><a href="http://matplotlib.org">matplotlib</a>/<a href="https://mpld3.github.io">mpld3</a>/<a href="http://bokeh.pydata.org">bokeh</a>：
+数据可视化
+</li>
+</ul>
+</li>
+
+<li>回测
+
+<ul class="org-ul">
+<li><a href="https://github.com/quantopian/zipline">zipline</a>：Quantopian使用的回测程序
+</li>
+<li><a href="http://prophet.michaelsu.io">prophet</a>：简单易学的api，还在beta阶段
+</li>
+<li><a href="https://github.com/gbeced/pyalgotrade">pyalgotrade</a>：
+事件驱动，我还没有用过，以后会试试
+</li>
+</ul>
+</li>
+
+<li>数学模型
+
+<ul class="org-ul">
+<li>参见<a href="https://github.com/vinta/awesome-python#science-and-data-analysis">这里</a>
+</li>
+</ul>
+</li>
+
+<li>技术分析
+
+<ul class="org-ul">
+<li><a href="https://github.com/mrjbq7/ta-lib">TA-Lib</a>：调用C++写的ta-lib，指标很全
+</li>
+</ul>
+</li>
+</ul>
+
+<hr  />
+
+<p>
+暂时想到这么多，以后继续添加。
+</p>
+</div>
+</div>
