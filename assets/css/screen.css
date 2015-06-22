@@ -888,6 +888,16 @@ body:not(.post-template) .post-title {
   padding: 0;
 }
 
+div.footdef p {
+    display: inline-block;
+    float: none;
+}
+
+div.footdef sup {
+    padding-right: 10px;
+    clear: both;
+}
+
 /* ==========================================================================
    5. Single Post - When you click on an individual post
    ========================================================================== */
