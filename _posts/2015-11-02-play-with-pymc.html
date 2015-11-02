@@ -1,0 +1,141 @@
+---
+layout: post
+title: 贝叶斯统计/PyMC 学习笔记 （一）
+tags:
+  - pymc3
+  -  bayesian
+categories:
+  - notes
+---
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">一些有用的链接</a></li>
+<li><a href="#orgheadline2">基本用法</a></li>
+</ul>
+</div>
+</div>
+<p>
+最近在读 Doing Bayesian Data Analysis，由于这本书的代码是用 R 写的，而我暂时也没有学 R 的打算，所以一边看书的同时一边学习用 PyMC3 来实现书中的例子/习题。这篇先写写 pymc 的使用。
+</p>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">一些有用的链接</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<ul class="org-ul">
+<li><a href="https://github.com/pymc-devs/pymc3">PyMC3 repo</a></li>
+<li><a href="https://github.com/pymc-devs/pymc3/tree/master/pymc3/examples">PyMC3 repo 提供的 example</a></li>
+<li><a href="https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers">Probabilistic Programming and Bayesian Methods for Hackers</a> （一本挺好的开源书，这本书是用 pymc2，这里用了它提供的 matplotlib 样式）</li>
+<li><a href="https://github.com/aloctavodia/Doing_bayesian_data_analysis">Doing Bayesian Data Analysis - python/pymc3 version</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2">基本用法</h2>
+<div class="outline-text-2" id="text-orgheadline2">
+<p>
+例如我们要测试一枚有偏的硬币，出现 head 的概率为 0.7。先把这个硬币抛上 100 遍:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #0051d8;">flips</span> = <span style="color: #8c0095;">stats</span>.<span style="color: #763500;">bernoulli</span>.<span style="color: #005f8f;">rvs</span><span style="color: #707183;">(</span><span style="color: #005f92;">p</span>=<span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">7</span>, <span style="color: #6a06ad;">size</span>=<span style="color: #D0372D;">100</span><span style="color: #707183;">)</span>
+<span style="color: #145300;">plt</span>.<span style="color: #a20000;">hist</span><span style="color: #707183;">(</span><span style="color: #0051d8;">flips</span>, <span style="color: #0049d4;">bins</span>=<span style="color: #D0372D;">2</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/py53035SOB.png" alt="py53035SOB.png" />
+</p>
+</div>
+
+<p>
+假设我们对这个硬币一无所知，则先验概率为均匀分布。定义模型：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #0000FF;">with</span> <span style="color: #0050d7;">pm</span>.<span style="color: #0044d1;">Model</span><span style="color: #707183;">()</span> <span style="color: #0000FF;">as</span> <span style="color: #9a0086;">model</span>:
+    <span style="color: #005f92;">p</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #005800;">Uniform</span><span style="color: #707183;">(</span><span style="color: #008000;">'p'</span>, <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">1</span>, <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">9</span><span style="color: #707183;">)</span>
+    <span style="color: #005f94;">obv</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #003fcd;">Bernoulli</span><span style="color: #707183;">(</span><span style="color: #008000;">'flips'</span>, <span style="color: #005f92;">p</span>, <span style="color: #0058d5;">observed</span>=<span style="color: #0051d8;">flips</span><span style="color: #707183;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">&#35266;&#23519;&#21040;&#30340;&#25968;&#25454;</span>
+</pre>
+</div>
+
+<p>
+然后定义取样的算法和初始点，就可以进行 sampling：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #0000FF;">with</span> <span style="color: #9a0086;">model</span>:
+    <span style="color: #ae0062;">start</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #005f8d;">find_MAP</span><span style="color: #707183;">(</span><span style="color: #006FE0;">vars</span>=<span style="color: #7388D6;">[</span><span style="color: #005f92;">p</span><span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+    <span style="color: #3e4e00;">step</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #005fb5;">NUTS</span><span style="color: #707183;">()</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">&#20070;&#20013;&#35814;&#32454;&#20171;&#32461;&#20102; Metropolis &#26041;&#27861;&#65292;pymc &#20063;&#26159;&#26377;&#25552;&#20379;&#30340;</span>
+
+    <span style="color: #003ccb;">trace</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #005bcf;">sample</span><span style="color: #707183;">(</span><span style="color: #D0372D;">2000</span>, <span style="color: #ae0062;">start</span>=<span style="color: #ae0062;">start</span>, <span style="color: #3e4e00;">step</span>=<span style="color: #3e4e00;">step</span>, <span style="color: #005a00;">progressbar</span>=<span style="color: #D0372D;">False</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+p 的后验分布：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #005d43;">burnin</span> = <span style="color: #D0372D;">1000</span>
+<span style="color: #551db6;">thin</span> = <span style="color: #D0372D;">10</span>
+
+<span style="color: #0050d7;">pm</span>.<span style="color: #005fae;">traceplot</span><span style="color: #707183;">(</span><span style="color: #003ccb;">trace</span><span style="color: #7388D6;">[</span><span style="color: #005d43;">burnin</span>::<span style="color: #551db6;">thin</span><span style="color: #7388D6;">]</span>, <span style="color: #7388D6;">[</span><span style="color: #008000;">'p'</span><span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/py53035siN.png" alt="py53035siN.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #0050d7;">pm</span>.<span style="color: #005c1b;">summary</span><span style="color: #707183;">(</span><span style="color: #003ccb;">trace</span><span style="color: #7388D6;">[</span><span style="color: #005d43;">burnin</span>::<span style="color: #551db6;">thin</span><span style="color: #7388D6;">]</span>, <span style="color: #7388D6;">[</span><span style="color: #008000;">'p'</span><span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+p:
+
+  Mean             SD               MC Error         95% HPD interval
+  -------------------------------------------------------------------
+  
+  0.662            0.038            0.004            [0.600, 0.756]
+
+  Posterior quantiles:
+  2.5            25             50             75             97.5
+  |--------------|==============|==============|--------------|
+  
+  0.586          0.637          0.664          0.687          0.751
+</pre>
+
+<p>
+然后还有自相关检验：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #0050d7;">pm</span>.<span style="color: #2b5100;">autocorrplot</span><span style="color: #707183;">(</span><span style="color: #003ccb;">trace</span><span style="color: #7388D6;">[</span><span style="color: #005d43;">burnin</span>::<span style="color: #551db6;">thin</span><span style="color: #7388D6;">]</span>, <span style="color: #7388D6;">[</span><span style="color: #008000;">'p'</span><span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/py69110HtM.png" alt="py69110HtM.png" />
+</p>
+</div>
+
+
+<p>
+以上。
+</p>
+</div>
+</div>
