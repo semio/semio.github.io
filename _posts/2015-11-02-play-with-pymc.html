@@ -7,15 +7,6 @@ tags:
 categories:
   - notes
 ---
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orgheadline1">一些有用的链接</a></li>
-<li><a href="#orgheadline2">基本用法</a></li>
-</ul>
-</div>
-</div>
 <p>
 最近在读 Doing Bayesian Data Analysis，由于这本书的代码是用 R 写的，而我暂时也没有学 R 的打算，所以一边看书的同时一边学习用 PyMC3 来实现书中的例子/习题。这篇先写写 pymc 的使用。
 </p>
@@ -108,13 +99,13 @@ p:
   Mean             SD               MC Error         95% HPD interval
   -------------------------------------------------------------------
   
-  0.662            0.038            0.004            [0.600, 0.756]
+  0.677            0.042            0.004            [0.608, 0.771]
 
   Posterior quantiles:
   2.5            25             50             75             97.5
   |--------------|==============|==============|--------------|
   
-  0.586          0.637          0.664          0.687          0.751
+  0.578          0.649          0.675          0.705          0.761
 </pre>
 
 <p>
