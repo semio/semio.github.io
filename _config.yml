@@ -9,6 +9,7 @@ paginate: 5
 baseurl: /
 domain_name: 'http://semio.github.io'
 google_analytics: 'UA-4181755-4'
+permalink: /:year/:month/:day/:title.html
 
 # Details for the RSS feed generator
 url:            'http://semio.github.io'
