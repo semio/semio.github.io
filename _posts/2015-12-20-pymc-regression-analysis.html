@@ -1,0 +1,390 @@
+---
+layout: post
+title: 贝叶斯统计/pymc 学习笔记（二）
+excerpt:  如何用 pymc 做常用的统计分析
+tags:
+  - statistics
+  - pymc
+  -
+categories:
+  - notes
+---
+<p>
+Doing Bayesian Data Analysis 后面花了 8 章书讲解了如何用贝叶斯统计实现各种分析和预测任务，可见贝叶斯定理的应用有多广泛。今天读完了 Metric Predictor 的部分并且用 pymc 跑了一遍，在这里回顾一下学到了多少内容。这是我第一次读，而且我也不是统计专业的，有很多没有明白的地方就跳过了，可能笔记里有很多写得不对的地方，等以后把不懂的地方弄明白了再回来检查。
+</p>
+
+<p>
+所谓的 Metric Predictor，就是可以比较大小的数值数据，例如身高，体重，成绩等。相关的统计任务有，对比两组数据是否属于同一分布，线性回归等。
+</p>
+
+<p>
+注：文里的代码用的是 python3。
+</p>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">T-test</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+对比两组数据是否属于同一分布，传统统计学的方法是 T 测试，计算 t 值，p 值还有 F 值。贝叶斯统计最初的应用就是估计样本的分布，自然也适用于样本的对比。它的优势在于，我们不需要假定样本是正态分布，而可以使用可能更符合现实的 t 分布。当然用模拟的方法去求值效率上肯定没有直接解方程好了。
+</p>
+
+<p>
+pymc 例子：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#29983;&#25104;&#20004;&#32452;&#25968;&#25454;&#65292;&#36825;&#37324;&#35774;&#32622;&#20004;&#20010;&#19981;&#21516;&#30340;&#20998;&#24067;</span>
+<span style="color: #859900;">from</span> <span style="color: #005900;">scipy</span> <span style="color: #859900;">import</span> <span style="color: #93009e;">stats</span>
+
+<span style="color: #0061bd;">mu1</span>, <span style="color: #004fe8;">std1</span> = <span style="color: #268bd2;">5</span>, <span style="color: #268bd2;">5</span>
+<span style="color: #005a00;">group1</span> = <span style="color: #93009e;">stats</span>.<span style="color: #005fdb;">norm</span>.<span style="color: #006097;">rvs</span><span style="color: #657b83;">(</span><span style="color: #3921c9;">loc</span>=<span style="color: #0061bd;">mu1</span>, <span style="color: #b90009;">scale</span>=<span style="color: #004fe8;">std1</span>, <span style="color: #6b00b9;">size</span>=<span style="color: #268bd2;">100</span><span style="color: #657b83;">)</span>
+
+<span style="color: #005d2c;">mu2</span>, <span style="color: #005c00;">std2</span> = <span style="color: #268bd2;">10</span>, <span style="color: #268bd2;">3</span>
+<span style="color: #b80066;">group2</span> = <span style="color: #93009e;">stats</span>.<span style="color: #005fdb;">norm</span>.<span style="color: #006097;">rvs</span><span style="color: #657b83;">(</span><span style="color: #3921c9;">loc</span>=<span style="color: #005d2c;">mu2</span>, <span style="color: #b90009;">scale</span>=<span style="color: #005c00;">std2</span>, <span style="color: #6b00b9;">size</span>=<span style="color: #268bd2;">100</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+然后定义测试模型，均值的先验定义为正态分布，方差定义为均匀分布：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">model</span>
+<span style="color: #859900;">with</span> <span style="color: #0052e9;">pm</span>.<span style="color: #0045e2;">Model</span><span style="color: #657b83;">()</span> <span style="color: #859900;">as</span> <span style="color: #af0000;">ttest</span>:
+    <span style="color: #444c00;">mu1e</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'mu1'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #005a00;">group1</span>.<span style="color: #8f00a1;">mean</span><span style="color: #2aa198;">()</span>, <span style="color: #005e51;">sd</span>=.<span style="color: #268bd2;">1</span><span style="color: #657b83;">)</span>
+    <span style="color: #bd0019;">std1e</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005900;">Uniform</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'std1'</span>, <span style="color: #624200;">lower</span>=<span style="color: #268bd2;">0</span>, <span style="color: #0061c9;">upper</span>=<span style="color: #268bd2;">10</span><span style="color: #657b83;">)</span>
+    <span style="color: #b10076;">g1</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'group1'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #444c00;">mu1e</span>, <span style="color: #005e51;">sd</span>=<span style="color: #bd0019;">std1e</span>, <span style="color: #005be6;">observed</span>=<span style="color: #005a00;">group1</span><span style="color: #657b83;">)</span>
+
+    <span style="color: #005f74;">mu2e</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'mu2'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #b80066;">group2</span>.<span style="color: #8f00a1;">mean</span><span style="color: #2aa198;">()</span>, <span style="color: #005e51;">sd</span>=.<span style="color: #268bd2;">1</span><span style="color: #657b83;">)</span>
+    <span style="color: #0060d4;">std2e</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005900;">Uniform</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'std2'</span>, <span style="color: #624200;">lower</span>=<span style="color: #268bd2;">0</span>, <span style="color: #0061c9;">upper</span>=<span style="color: #268bd2;">10</span><span style="color: #657b83;">)</span>
+    <span style="color: #a80000;">g2</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'group2'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #005f74;">mu2e</span>, <span style="color: #005e51;">sd</span>=<span style="color: #0060d4;">std2e</span>, <span style="color: #005be6;">observed</span>=<span style="color: #b80066;">group2</span><span style="color: #657b83;">)</span>
+
+    <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#38656;&#35201;&#23545;&#27604;&#30340;&#37096;&#20998;&#65292;&#22343;&#20540;&#21644;&#26631;&#20934;&#24046;</span>
+    <span style="color: #6e3b00;">mean_dif</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #8400aa;">Deterministic</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'Mean dif'</span>, <span style="color: #444c00;">mu1e</span>-<span style="color: #005f74;">mu2e</span><span style="color: #657b83;">)</span>
+    <span style="color: #bf0027;">std_dif</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #8400aa;">Deterministic</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'Std dif'</span>, <span style="color: #bd0019;">std1e</span>-<span style="color: #0060d4;">std2e</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+MCMC，登场~
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #859900;">with</span> <span style="color: #af0000;">ttest</span>:
+    <span style="color: #b80065;">start</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #006096;">find_MAP</span><span style="color: #657b83;">()</span>
+    <span style="color: #3c4e00;">step</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #3d4e00;">Metropolis</span><span style="color: #657b83;">()</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Metropolis &#26041;&#27861;&#22312;&#20070;&#20013;&#26377;&#24456;&#29983;&#21160;&#30340;&#25551;&#36848;</span>
+    <span style="color: #0061a0;">trace_ttest</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005edf;">sample</span><span style="color: #657b83;">(</span><span style="color: #268bd2;">10000</span>, <span style="color: #3c4e00;">step</span>, <span style="color: #b80065;">start</span>, <span style="color: #005b00;">progressbar</span>=<span style="color: #268bd2;">False</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+Sampling&#x2026;&#x2026;Done!
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #0052e9;">pm</span>.<span style="color: #0061ba;">traceplot</span><span style="color: #657b83;">(</span><span style="color: #0061a0;">trace_ttest</span><span style="color: #2aa198;">[</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">50</span><span style="color: #2aa198;">]</span>, <span style="color: #6c71c4;">vars</span>=<span style="color: #2aa198;">[</span><span style="color: #2aa198;">'Mean dif'</span>, <span style="color: #2aa198;">'Std dif'</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+<span style="color: #075400;">plt</span>.<span style="color: #9b0095;">tight_layout</span><span style="color: #657b83;">()</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="/./assets/images/ttest.png" alt="ttest.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2">线性回归，一个自变量</h2>
+<div class="outline-text-2" id="text-orgheadline2">
+<p>
+处理线性回归问题，通常指定因变量 Y 属于一个正态分布：
+$ Y &sim; N(&mu;, &sigma;) $， 其中 $ &mu; = &alpha; + \betaX $
+由于现实问题经常会有 outliner 出现，指定 Y 属于 t-分布会产生更加好的结果。
+</p>
+
+<p>
+例子：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Data</span>
+<span style="color: #a60000;">x</span> = <span style="color: #335000;">np</span>.<span style="color: #b90064;">linspace</span><span style="color: #657b83;">(</span><span style="color: #268bd2;">0</span>, <span style="color: #268bd2;">20</span>, <span style="color: #268bd2;">20</span><span style="color: #657b83;">)</span>
+<span style="color: #005b00;">a</span>, <span style="color: #006080;">b</span> = <span style="color: #268bd2;">3</span>, <span style="color: #268bd2;">5</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#38656;&#35201;&#20272;&#35745;&#30340;&#21442;&#25968;</span>
+<span style="color: #00609b;">y</span> = <span style="color: #005b00;">a</span> * <span style="color: #a60000;">x</span> + <span style="color: #006080;">b</span> + <span style="color: #93009e;">stats</span>.<span style="color: #0d5400;">t</span>.<span style="color: #006097;">rvs</span><span style="color: #657b83;">(</span><span style="color: #7e2f00;">df</span>=<span style="color: #268bd2;">1</span>, <span style="color: #b90009;">scale</span>=<span style="color: #268bd2;">3</span>, <span style="color: #6b00b9;">size</span>=<span style="color: #335000;">np</span>.<span style="color: #6b00b9;">size</span><span style="color: #2aa198;">(</span><span style="color: #a60000;">x</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+
+<span style="color: #075400;">plt</span>.<span style="color: #be004e;">plot</span><span style="color: #657b83;">(</span><span style="color: #a60000;">x</span>, <span style="color: #00609b;">y</span>, <span style="color: #2aa198;">'.'</span><span style="color: #657b83;">)</span>
+<span style="color: #075400;">plt</span>.<span style="color: #005c0a;">xlim</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>-<span style="color: #268bd2;">10</span>, <span style="color: #268bd2;">30</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<span style="color: #075400;">plt</span>.<span style="color: #0061b5;">ylim</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>-<span style="color: #268bd2;">10</span>, <span style="color: #268bd2;">80</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="/./assets/images/lr1.png" alt="lr1.png" />
+</p>
+</div>
+
+<p>
+定义模型，用 T 分布来做 Y 的分布，这时，自由度 nu 的先验为指数分布，标准差为均匀分布，
+alpha 和 beta 为正态分布。如果对变量进行标准化，即使变量变为 0， 方差为 1，那么
+alpha 和 beta 的先验均值为 0，但现在这个简单模型，可以从上图看到大概的值。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #859900;">with</span> <span style="color: #0052e9;">pm</span>.<span style="color: #0045e2;">Model</span><span style="color: #657b83;">()</span> <span style="color: #859900;">as</span> <span style="color: #0059e8;">linreg</span>:
+    <span style="color: #00608a;">ma</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'alpha'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #268bd2;">4</span>, <span style="color: #005e51;">sd</span>=<span style="color: #268bd2;">2</span><span style="color: #657b83;">)</span>
+    <span style="color: #c0003d;">mb</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'beta'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #268bd2;">7</span>, <span style="color: #005e51;">sd</span>=<span style="color: #268bd2;">2</span><span style="color: #657b83;">)</span>
+    <span style="color: #0038d8;">mu</span> = <span style="color: #00608a;">ma</span> * <span style="color: #a60000;">x</span> + <span style="color: #c0003d;">mb</span>
+    <span style="color: #0049e5;">nuMinusOne</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #2726cc;">Exponential</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'nu'</span>, <span style="color: #6f00b7;">lam</span>=<span style="color: #268bd2;">1</span><span style="color: #657b83;">)</span>
+    <span style="color: #0044e1;">nu</span> = <span style="color: #0049e5;">nuMinusOne</span> + <span style="color: #268bd2;">1</span>
+    <span style="color: #6f00b7;">lam</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005900;">Uniform</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'lam'</span>, <span style="color: #268bd2;">0</span>, <span style="color: #268bd2;">10</span><span style="color: #657b83;">)</span>
+
+    <span style="color: #005b00;">my</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #b90064;">T</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'Y'</span>, <span style="color: #0044e1;">nu</span>=<span style="color: #0044e1;">nu</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #0038d8;">mu</span>, <span style="color: #6f00b7;">lam</span>=<span style="color: #6f00b7;">lam</span>, <span style="color: #005be6;">observed</span>=<span style="color: #00609b;">y</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+继续 MCMC，这次我们用 NUTS sampling，据说在变量数很多的时候能够大大改善效率。在这里是杀鸡用牛刀了。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #859900;">with</span> <span style="color: #0059e8;">linreg</span>:
+    <span style="color: #b80065;">start</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #006096;">find_MAP</span><span style="color: #657b83;">()</span>
+    <span style="color: #3c4e00;">step</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0061c2;">NUTS</span><span style="color: #657b83;">(</span><span style="color: #005f77;">scaling</span>=<span style="color: #b80065;">start</span><span style="color: #657b83;">)</span>
+    <span style="color: #0060cf;">trace_linreg</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005edf;">sample</span><span style="color: #657b83;">(</span><span style="color: #268bd2;">10000</span>, <span style="color: #3c4e00;">step</span>, <span style="color: #b80065;">start</span>=<span style="color: #b80065;">start</span>, <span style="color: #005b00;">progressbar</span>=<span style="color: #268bd2;">False</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+看看结果，注意 a 和 b 的实际值为 3 和 5
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #0052e9;">pm</span>.<span style="color: #005d15;">summary</span><span style="color: #657b83;">(</span><span style="color: #0060cf;">trace_linreg</span><span style="color: #2aa198;">[</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">100</span><span style="color: #2aa198;">]</span>, <span style="color: #6c71c4;">vars</span>=<span style="color: #2aa198;">[</span><span style="color: #2aa198;">'alpha'</span>, <span style="color: #2aa198;">'beta'</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+alpha:
+
+  Mean             SD               MC Error         95% HPD interval
+  -------------------------------------------------------------------
+  
+  2.965            0.094            nan              [2.746, 3.159]
+
+  Posterior quantiles:
+  2.5            25             50             75             97.5
+  |--------------|==============|==============|--------------|
+  
+  2.746          2.925          2.966          3.025          3.159
+
+
+beta:
+
+  Mean             SD               MC Error         95% HPD interval
+  -------------------------------------------------------------------
+  
+  6.637            1.182            nan              [3.910, 8.712]
+
+  Posterior quantiles:
+  2.5            25             50             75             97.5
+  |--------------|==============|==============|--------------|
+  
+  4.160          5.950          6.747          7.268          9.593
+</pre>
+
+<p>
+用图片展示，颜色越深，代表确定性越高。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #0045e2;">alpha</span> = <span style="color: #0060cf;">trace_linreg</span><span style="color: #657b83;">[</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">100</span><span style="color: #657b83;">][</span><span style="color: #2aa198;">'alpha'</span><span style="color: #657b83;">]</span>
+<span style="color: #b70000;">beta</span> = <span style="color: #0060cf;">trace_linreg</span><span style="color: #657b83;">[</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">100</span><span style="color: #657b83;">][</span><span style="color: #2aa198;">'beta'</span><span style="color: #657b83;">]</span>
+<span style="color: #005900;">x_p</span> = <span style="color: #335000;">np</span>.<span style="color: #b90064;">linspace</span><span style="color: #657b83;">(</span>-<span style="color: #268bd2;">3</span>, <span style="color: #268bd2;">23</span><span style="color: #657b83;">)</span>
+<span style="color: #859900;">for</span> <span style="color: #544800;">i</span> <span style="color: #859900;">in</span> <span style="color: #6c71c4;">range</span><span style="color: #657b83;">(</span><span style="color: #6c71c4;">len</span><span style="color: #2aa198;">(</span><span style="color: #0045e2;">alpha</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>:
+    <span style="color: #00608b;">y_p</span> = <span style="color: #0045e2;">alpha</span><span style="color: #657b83;">[</span><span style="color: #544800;">i</span><span style="color: #657b83;">]</span> * <span style="color: #005900;">x_p</span> + <span style="color: #b70000;">beta</span><span style="color: #657b83;">[</span><span style="color: #544800;">i</span><span style="color: #657b83;">]</span>
+    <span style="color: #075400;">plt</span>.<span style="color: #be004e;">plot</span><span style="color: #657b83;">(</span><span style="color: #005900;">x_p</span>, <span style="color: #00608b;">y_p</span>, <span style="color: #2aa198;">'k'</span>, <span style="color: #0045e2;">alpha</span>=.<span style="color: #268bd2;">03</span><span style="color: #657b83;">)</span>
+
+<span style="color: #075400;">plt</span>.<span style="color: #be004e;">plot</span><span style="color: #657b83;">(</span><span style="color: #a60000;">x</span>, <span style="color: #00609b;">y</span>, <span style="color: #2aa198;">'.'</span><span style="color: #657b83;">)</span>
+
+<span style="color: #075400;">plt</span>.<span style="color: #005c0a;">xlim</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>-<span style="color: #268bd2;">10</span>, <span style="color: #268bd2;">30</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<span style="color: #075400;">plt</span>.<span style="color: #0061b5;">ylim</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>-<span style="color: #268bd2;">10</span>, <span style="color: #268bd2;">80</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="/./assets/images/py161752JW.png" alt="py161752JW.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3">线性回归，多个自变量</h2>
+<div class="outline-text-2" id="text-orgheadline3">
+<p>
+多个自变量和一个自变量的模型基本是一致的，只是要给每个自变量的 beta 值指定先验。这时候用变量标准化可以简化模型。
+</p>
+
+<p>
+下面的例子的数据用的是 Andrew Ng 的 <a href="https://www.coursera.org/learn/machine-learning">machine learning 课程</a>里面的习题数据。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #a60000;">x</span> = <span style="color: #bf0023;">data</span><span style="color: #657b83;">[</span><span style="color: #2aa198;">'X'</span><span style="color: #657b83;">]</span>.<span style="color: #005de3;">flatten</span><span style="color: #657b83;">()</span>
+<span style="color: #00609b;">y</span> = <span style="color: #bf0023;">data</span><span style="color: #657b83;">[</span><span style="color: #2aa198;">'y'</span><span style="color: #657b83;">]</span>.<span style="color: #005de3;">flatten</span><span style="color: #657b83;">()</span>
+
+<span style="color: #075400;">plt</span>.<span style="color: #be004e;">plot</span><span style="color: #657b83;">(</span><span style="color: #a60000;">x</span>, <span style="color: #00609b;">y</span>, <span style="color: #2aa198;">'bx'</span><span style="color: #657b83;">)</span>
+<span style="color: #075400;">plt</span>.<span style="color: #005c0a;">xlim</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>-<span style="color: #268bd2;">60</span>, <span style="color: #268bd2;">50</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<span style="color: #075400;">plt</span>.<span style="color: #0061b5;">ylim</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>-<span style="color: #268bd2;">10</span>, <span style="color: #268bd2;">50</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="/./assets/images/py16175Qei.png" alt="py16175Qei.png" />
+</p>
+</div>
+
+<p>
+因为变量只有一个，而且这个图看着也像是多项式函数的图像，所以先弄一些多项式 feature，然后再定义我们的模型。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">get polynomial features</span>
+<span style="color: #0056e9;">x_mat</span> = <span style="color: #335000;">np</span>.<span style="color: #006097;">c_</span><span style="color: #657b83;">[</span><span style="color: #a60000;">x</span>, <span style="color: #2aa198;">(</span><span style="color: #a60000;">x</span>**<span style="color: #268bd2;">2</span><span style="color: #2aa198;">)</span>, <span style="color: #2aa198;">(</span><span style="color: #a60000;">x</span>**<span style="color: #268bd2;">3</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">]</span>
+
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">standarize the feature</span>
+<span style="color: #005c00;">x_mu</span> = <span style="color: #0056e9;">x_mat</span>.<span style="color: #8f00a1;">mean</span><span style="color: #657b83;">(</span><span style="color: #5d4400;">axis</span>=<span style="color: #268bd2;">0</span><span style="color: #657b83;">)</span>
+<span style="color: #b6006a;">x_std</span> = <span style="color: #0056e9;">x_mat</span>.<span style="color: #9e0000;">std</span><span style="color: #657b83;">(</span><span style="color: #5d4400;">axis</span>=<span style="color: #268bd2;">0</span><span style="color: #657b83;">)</span>
+
+<span style="color: #0056e9;">x_mat</span><span style="color: #657b83;">[</span>:, <span style="color: #268bd2;">0</span><span style="color: #657b83;">]</span> = <span style="color: #657b83;">(</span><span style="color: #0056e9;">x_mat</span><span style="color: #2aa198;">[</span>:, <span style="color: #268bd2;">0</span><span style="color: #2aa198;">]</span> - <span style="color: #005c00;">x_mu</span><span style="color: #2aa198;">[</span><span style="color: #268bd2;">0</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span> / <span style="color: #b6006a;">x_std</span><span style="color: #657b83;">[</span><span style="color: #268bd2;">0</span><span style="color: #657b83;">]</span>
+<span style="color: #0056e9;">x_mat</span><span style="color: #657b83;">[</span>:, <span style="color: #268bd2;">1</span><span style="color: #657b83;">]</span> = <span style="color: #657b83;">(</span><span style="color: #0056e9;">x_mat</span><span style="color: #2aa198;">[</span>:, <span style="color: #268bd2;">1</span><span style="color: #2aa198;">]</span> - <span style="color: #005c00;">x_mu</span><span style="color: #2aa198;">[</span><span style="color: #268bd2;">1</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span> / <span style="color: #b6006a;">x_std</span><span style="color: #657b83;">[</span><span style="color: #268bd2;">1</span><span style="color: #657b83;">]</span>
+<span style="color: #0056e9;">x_mat</span><span style="color: #657b83;">[</span>:, <span style="color: #268bd2;">2</span><span style="color: #657b83;">]</span> = <span style="color: #657b83;">(</span><span style="color: #0056e9;">x_mat</span><span style="color: #2aa198;">[</span>:, <span style="color: #268bd2;">2</span><span style="color: #2aa198;">]</span> - <span style="color: #005c00;">x_mu</span><span style="color: #2aa198;">[</span><span style="color: #268bd2;">2</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span> / <span style="color: #b6006a;">x_std</span><span style="color: #657b83;">[</span><span style="color: #268bd2;">2</span><span style="color: #657b83;">]</span>
+
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">also standardize the target</span>
+<span style="color: #ae007b;">y_mu</span> = <span style="color: #00609b;">y</span>.<span style="color: #8f00a1;">mean</span><span style="color: #657b83;">()</span>
+<span style="color: #0050e8;">y_std</span> = <span style="color: #00609b;">y</span>.<span style="color: #9e0000;">std</span><span style="color: #657b83;">()</span>
+
+<span style="color: #006092;">y_mat</span> = <span style="color: #657b83;">(</span><span style="color: #00609b;">y</span> - <span style="color: #ae007b;">y_mu</span><span style="color: #657b83;">)</span> / <span style="color: #0050e8;">y_std</span>
+
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Model</span>
+<span style="color: #859900;">with</span> <span style="color: #0052e9;">pm</span>.<span style="color: #0045e2;">Model</span><span style="color: #657b83;">()</span> <span style="color: #859900;">as</span> <span style="color: #9b0095;">polymol</span>:
+    <span style="color: #0060d2;">b0</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'b0'</span>, <span style="color: #005e51;">sd</span>=<span style="color: #268bd2;">50</span><span style="color: #657b83;">)</span>
+    <span style="color: #005d21;">b1</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'b1'</span>, <span style="color: #005e51;">sd</span>=<span style="color: #268bd2;">50</span>, <span style="color: #0061b7;">shape</span>=<span style="color: #2aa198;">(</span><span style="color: #268bd2;">3</span>,<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+
+    <span style="color: #0038d8;">zsigma</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005900;">Uniform</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'zsigma'</span>, <span style="color: #268bd2;">1</span>.<span style="color: #268bd2;">0E</span>-<span style="color: #268bd2;">5</span> , <span style="color: #268bd2;">1</span>.<span style="color: #268bd2;">0E</span>-<span style="color: #268bd2;">1</span><span style="color: #657b83;">)</span>
+    <span style="color: #0049e5;">nuMinusOne</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #2726cc;">Exponential</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'nu-1'</span>, <span style="color: #6f00b7;">lam</span>=<span style="color: #268bd2;">1</span>/<span style="color: #268bd2;">29</span><span style="color: #657b83;">)</span>
+    <span style="color: #0044e1;">nu</span> = <span style="color: #0049e5;">nuMinusOne</span> + <span style="color: #268bd2;">1</span>
+
+    <span style="color: #0038d8;">mu</span> = <span style="color: #0060d2;">b0</span> + <span style="color: #0052e9;">pm</span>.<span style="color: #8500a9;">dot</span><span style="color: #657b83;">(</span><span style="color: #005d21;">b1</span>, <span style="color: #0056e9;">x_mat</span>.<span style="color: #b90064;">T</span><span style="color: #657b83;">)</span>
+
+    <span style="color: #00619e;">obv</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #b90064;">T</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'observed'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #0038d8;">mu</span>, <span style="color: #0044e1;">nu</span>=<span style="color: #0044e1;">nu</span>, <span style="color: #6f00b7;">lam</span>=<span style="color: #268bd2;">1</span>/<span style="color: #2aa198;">(</span><span style="color: #0038d8;">zsigma</span>**<span style="color: #268bd2;">2</span><span style="color: #2aa198;">)</span>, <span style="color: #005be6;">observed</span>=<span style="color: #006092;">y_mat</span><span style="color: #657b83;">)</span>
+
+    <span style="color: #872400;">beta0_</span> = <span style="color: #657b83;">(</span><span style="color: #0050e8;">y_std</span> * <span style="color: #0060d2;">b0</span><span style="color: #657b83;">)</span> + <span style="color: #ae007b;">y_mu</span> - <span style="color: #0050e8;">y_std</span> * <span style="color: #0052e9;">pm</span>.<span style="color: #6c71c4;">sum</span><span style="color: #657b83;">(</span><span style="color: #005d21;">b1</span> * <span style="color: #005c00;">x_mu</span> / <span style="color: #b6006a;">x_std</span>, <span style="color: #5d4400;">axis</span>=<span style="color: #268bd2;">0</span><span style="color: #657b83;">)</span>
+    <span style="color: #4b18c5;">beta1_</span> = <span style="color: #0050e8;">y_std</span> * <span style="color: #657b83;">(</span><span style="color: #005d21;">b1</span> / <span style="color: #b6006a;">x_std</span><span style="color: #657b83;">)</span>
+
+    <span style="color: #733800;">beta0</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #8400aa;">Deterministic</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'beta0'</span>, <span style="color: #872400;">beta0_</span><span style="color: #657b83;">)</span>
+    <span style="color: #94009d;">beta1</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #8400aa;">Deterministic</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'beta1'</span>, <span style="color: #4b18c5;">beta1_</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+继续 MCMC，这个例子稍微复杂一点。其实全部用 NUTS 或者 Metropolis 也是可以的。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #859900;">with</span> <span style="color: #9b0095;">polymol</span>:
+    <span style="color: #b80065;">start</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #006096;">find_MAP</span><span style="color: #657b83;">()</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Find starting value by optimization</span>
+    <span style="color: #c00031;">step1</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0061c2;">NUTS</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #005d21;">b1</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+    <span style="color: #005e3d;">step2</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #3d4e00;">Metropolis</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #0060d2;">b0</span>, <span style="color: #0038d8;">zsigma</span>, <span style="color: #0044e1;">nu</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+    <span style="color: #003cdb;">trace</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005edf;">sample</span><span style="color: #657b83;">(</span><span style="color: #268bd2;">10000</span>, <span style="color: #2aa198;">[</span><span style="color: #c00031;">step1</span>, <span style="color: #005e3d;">step2</span><span style="color: #2aa198;">]</span>, <span style="color: #b80065;">start</span>, <span style="color: #005b00;">progressbar</span>=<span style="color: #268bd2;">False</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+看看结果如何。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #0052e9;">pm</span>.<span style="color: #005d15;">summary</span><span style="color: #657b83;">(</span><span style="color: #003cdb;">trace</span><span style="color: #2aa198;">[</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">50</span><span style="color: #2aa198;">]</span>, <span style="color: #6c71c4;">vars</span>=<span style="color: #2aa198;">[</span><span style="color: #2aa198;">'beta0'</span>, <span style="color: #2aa198;">'beta1'</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+beta0:
+
+  Mean             SD               MC Error         95% HPD interval
+  -------------------------------------------------------------------
+  
+  5.121            0.551            0.053            [3.956, 6.045]
+
+  Posterior quantiles:
+  2.5            25             50             75             97.5
+  |--------------|==============|==============|--------------|
+  
+  3.913          4.801          5.160          5.525          6.035
+
+
+beta1:
+
+  Mean             SD               MC Error         95% HPD interval
+  -------------------------------------------------------------------
+  
+  0.388            0.042            0.004            [0.298, 0.464]
+  0.010            0.001            0.000            [0.009, 0.012]
+  0.000            0.000            0.000            [0.000, 0.000]
+
+  Posterior quantiles:
+  2.5            25             50             75             97.5
+  |--------------|==============|==============|--------------|
+  
+  0.298          0.361          0.392          0.418          0.464
+  0.009          0.010          0.010          0.011          0.012
+  0.000          0.000          0.000          0.000          0.000
+</pre>
+
+<p>
+下图仍然是颜色越深的线，确定性越高。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #733800;">beta0</span> = <span style="color: #003cdb;">trace</span><span style="color: #657b83;">[</span><span style="color: #2aa198;">'beta0'</span><span style="color: #657b83;">][</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">50</span><span style="color: #657b83;">]</span>
+<span style="color: #94009d;">beta1</span> = <span style="color: #003cdb;">trace</span><span style="color: #657b83;">[</span><span style="color: #2aa198;">'beta1'</span><span style="color: #657b83;">][</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">50</span><span style="color: #657b83;">]</span>
+
+<span style="color: #075400;">plt</span>.<span style="color: #be004e;">plot</span><span style="color: #657b83;">(</span><span style="color: #a60000;">x</span>, <span style="color: #00609b;">y</span>, <span style="color: #2aa198;">'x'</span><span style="color: #657b83;">)</span>
+
+<span style="color: #bf0047;">x_t</span> = <span style="color: #335000;">np</span>.<span style="color: #b90064;">linspace</span><span style="color: #657b83;">(</span>-<span style="color: #268bd2;">55</span>, <span style="color: #268bd2;">55</span><span style="color: #657b83;">)</span>
+<span style="color: #0058e8;">x_pred</span> = <span style="color: #335000;">np</span>.<span style="color: #006097;">c_</span><span style="color: #657b83;">[</span><span style="color: #bf0047;">x_t</span>, <span style="color: #2aa198;">(</span><span style="color: #bf0047;">x_t</span>**<span style="color: #268bd2;">2</span><span style="color: #2aa198;">)</span>, <span style="color: #2aa198;">(</span><span style="color: #bf0047;">x_t</span>**<span style="color: #268bd2;">3</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">]</span>
+
+<span style="color: #859900;">for</span> <span style="color: #544800;">i</span> <span style="color: #859900;">in</span> <span style="color: #6c71c4;">range</span><span style="color: #657b83;">(</span><span style="color: #6c71c4;">len</span><span style="color: #2aa198;">(</span><span style="color: #733800;">beta0</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>:
+    <span style="color: #00608b;">y_p</span> = <span style="color: #335000;">np</span>.<span style="color: #8500a9;">dot</span><span style="color: #657b83;">(</span><span style="color: #94009d;">beta1</span><span style="color: #2aa198;">[</span><span style="color: #544800;">i</span><span style="color: #2aa198;">]</span>, <span style="color: #0058e8;">x_pred</span>.<span style="color: #b90064;">T</span><span style="color: #657b83;">)</span> + <span style="color: #733800;">beta0</span><span style="color: #657b83;">[</span><span style="color: #544800;">i</span><span style="color: #657b83;">]</span>
+    <span style="color: #075400;">plt</span>.<span style="color: #be004e;">plot</span><span style="color: #657b83;">(</span><span style="color: #0058e8;">x_pred</span><span style="color: #2aa198;">[</span>:, <span style="color: #268bd2;">0</span><span style="color: #2aa198;">]</span>, <span style="color: #00608b;">y_p</span>, <span style="color: #2aa198;">'k-'</span>, <span style="color: #0045e2;">alpha</span>=.<span style="color: #268bd2;">02</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="/./assets/images/polyfit.png" alt="polyfit.png" />
+</p>
+</div>
+</div>
+</div>

@@ -31,8 +31,8 @@ categories:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-ipython"><span style="color: #0051d8;">flips</span> = <span style="color: #8c0095;">stats</span>.<span style="color: #763500;">bernoulli</span>.<span style="color: #005f8f;">rvs</span><span style="color: #707183;">(</span><span style="color: #005f92;">p</span>=<span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">7</span>, <span style="color: #6a06ad;">size</span>=<span style="color: #D0372D;">100</span><span style="color: #707183;">)</span>
-<span style="color: #145300;">plt</span>.<span style="color: #a20000;">hist</span><span style="color: #707183;">(</span><span style="color: #0051d8;">flips</span>, <span style="color: #0049d4;">bins</span>=<span style="color: #D0372D;">2</span><span style="color: #707183;">)</span>
+<pre class="src src-ipython"><span style="color: #0053e9;">flips</span> = <span style="color: #93009e;">stats</span>.<span style="color: #793300;">bernoulli</span>.<span style="color: #006097;">rvs</span><span style="color: #657b83;">(</span><span style="color: #00609b;">p</span>=<span style="color: #268bd2;">0</span>.<span style="color: #268bd2;">7</span>, <span style="color: #6b00b9;">size</span>=<span style="color: #268bd2;">100</span><span style="color: #657b83;">)</span>
+<span style="color: #075400;">plt</span>.<span style="color: #aa0000;">hist</span><span style="color: #657b83;">(</span><span style="color: #0053e9;">flips</span>, <span style="color: #004ae5;">bins</span>=<span style="color: #268bd2;">2</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -48,9 +48,9 @@ categories:
 
 <div class="org-src-container">
 
-<pre class="src src-ipython"><span style="color: #0000FF;">with</span> <span style="color: #0050d7;">pm</span>.<span style="color: #0044d1;">Model</span><span style="color: #707183;">()</span> <span style="color: #0000FF;">as</span> <span style="color: #9a0086;">model</span>:
-    <span style="color: #005f92;">p</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #005800;">Uniform</span><span style="color: #707183;">(</span><span style="color: #008000;">'p'</span>, <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">1</span>, <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">9</span><span style="color: #707183;">)</span>
-    <span style="color: #005f94;">obv</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #003fcd;">Bernoulli</span><span style="color: #707183;">(</span><span style="color: #008000;">'flips'</span>, <span style="color: #005f92;">p</span>, <span style="color: #0058d5;">observed</span>=<span style="color: #0051d8;">flips</span><span style="color: #707183;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">&#35266;&#23519;&#21040;&#30340;&#25968;&#25454;</span>
+<pre class="src src-ipython"><span style="color: #859900;">with</span> <span style="color: #0052e9;">pm</span>.<span style="color: #0045e2;">Model</span><span style="color: #657b83;">()</span> <span style="color: #859900;">as</span> <span style="color: #a2008d;">model</span>:
+    <span style="color: #00609b;">p</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005900;">Uniform</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'p'</span>, <span style="color: #268bd2;">0</span>.<span style="color: #268bd2;">1</span>, <span style="color: #268bd2;">0</span>.<span style="color: #268bd2;">9</span><span style="color: #657b83;">)</span>
+    <span style="color: #00619e;">obv</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #003fdd;">Bernoulli</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'flips'</span>, <span style="color: #00609b;">p</span>, <span style="color: #005be6;">observed</span>=<span style="color: #0053e9;">flips</span><span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#35266;&#23519;&#21040;&#30340;&#25968;&#25454;</span>
 </pre>
 </div>
 
@@ -60,11 +60,11 @@ categories:
 
 <div class="org-src-container">
 
-<pre class="src src-ipython"><span style="color: #0000FF;">with</span> <span style="color: #9a0086;">model</span>:
-    <span style="color: #ae0062;">start</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #005f8d;">find_MAP</span><span style="color: #707183;">(</span><span style="color: #006FE0;">vars</span>=<span style="color: #7388D6;">[</span><span style="color: #005f92;">p</span><span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
-    <span style="color: #3e4e00;">step</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #005fb5;">NUTS</span><span style="color: #707183;">()</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">&#20070;&#20013;&#35814;&#32454;&#20171;&#32461;&#20102; Metropolis &#26041;&#27861;&#65292;pymc &#20063;&#26159;&#26377;&#25552;&#20379;&#30340;</span>
+<pre class="src src-ipython"><span style="color: #859900;">with</span> <span style="color: #a2008d;">model</span>:
+    <span style="color: #b80065;">start</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #006096;">find_MAP</span><span style="color: #657b83;">(</span><span style="color: #6c71c4;">vars</span>=<span style="color: #2aa198;">[</span><span style="color: #00609b;">p</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+    <span style="color: #3c4e00;">step</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0061c2;">NUTS</span><span style="color: #657b83;">()</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#20070;&#20013;&#35814;&#32454;&#20171;&#32461;&#20102; Metropolis &#26041;&#27861;&#65292;pymc &#20063;&#26159;&#26377;&#25552;&#20379;&#30340;</span>
 
-    <span style="color: #003ccb;">trace</span> = <span style="color: #0050d7;">pm</span>.<span style="color: #005bcf;">sample</span><span style="color: #707183;">(</span><span style="color: #D0372D;">2000</span>, <span style="color: #ae0062;">start</span>=<span style="color: #ae0062;">start</span>, <span style="color: #3e4e00;">step</span>=<span style="color: #3e4e00;">step</span>, <span style="color: #005a00;">progressbar</span>=<span style="color: #D0372D;">False</span><span style="color: #707183;">)</span>
+    <span style="color: #003cdb;">trace</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005edf;">sample</span><span style="color: #657b83;">(</span><span style="color: #268bd2;">2000</span>, <span style="color: #b80065;">start</span>=<span style="color: #b80065;">start</span>, <span style="color: #3c4e00;">step</span>=<span style="color: #3c4e00;">step</span>, <span style="color: #005b00;">progressbar</span>=<span style="color: #268bd2;">False</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -74,10 +74,10 @@ p 的后验分布：
 
 <div class="org-src-container">
 
-<pre class="src src-ipython"><span style="color: #005d43;">burnin</span> = <span style="color: #D0372D;">1000</span>
-<span style="color: #551db6;">thin</span> = <span style="color: #D0372D;">10</span>
+<pre class="src src-ipython"><span style="color: #005e43;">burnin</span> = <span style="color: #268bd2;">1000</span>
+<span style="color: #5312c3;">thin</span> = <span style="color: #268bd2;">10</span>
 
-<span style="color: #0050d7;">pm</span>.<span style="color: #005fae;">traceplot</span><span style="color: #707183;">(</span><span style="color: #003ccb;">trace</span><span style="color: #7388D6;">[</span><span style="color: #005d43;">burnin</span>::<span style="color: #551db6;">thin</span><span style="color: #7388D6;">]</span>, <span style="color: #7388D6;">[</span><span style="color: #008000;">'p'</span><span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+<span style="color: #0052e9;">pm</span>.<span style="color: #0061ba;">traceplot</span><span style="color: #657b83;">(</span><span style="color: #003cdb;">trace</span><span style="color: #2aa198;">[</span><span style="color: #005e43;">burnin</span>::<span style="color: #5312c3;">thin</span><span style="color: #2aa198;">]</span>, <span style="color: #2aa198;">[</span><span style="color: #2aa198;">'p'</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -89,7 +89,7 @@ p 的后验分布：
 
 <div class="org-src-container">
 
-<pre class="src src-ipython"><span style="color: #0050d7;">pm</span>.<span style="color: #005c1b;">summary</span><span style="color: #707183;">(</span><span style="color: #003ccb;">trace</span><span style="color: #7388D6;">[</span><span style="color: #005d43;">burnin</span>::<span style="color: #551db6;">thin</span><span style="color: #7388D6;">]</span>, <span style="color: #7388D6;">[</span><span style="color: #008000;">'p'</span><span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+<pre class="src src-ipython"><span style="color: #0052e9;">pm</span>.<span style="color: #005d15;">summary</span><span style="color: #657b83;">(</span><span style="color: #003cdb;">trace</span><span style="color: #2aa198;">[</span><span style="color: #005e43;">burnin</span>::<span style="color: #5312c3;">thin</span><span style="color: #2aa198;">]</span>, <span style="color: #2aa198;">[</span><span style="color: #2aa198;">'p'</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -99,13 +99,13 @@ p:
   Mean             SD               MC Error         95% HPD interval
   -------------------------------------------------------------------
   
-  0.679            0.050            0.005            [0.582, 0.758]
+  0.670            0.051            0.005            [0.584, 0.765]
 
   Posterior quantiles:
   2.5            25             50             75             97.5
   |--------------|==============|==============|--------------|
   
-  0.560          0.648          0.685          0.720          0.756
+  0.580          0.639          0.673          0.703          0.762
 </pre>
 
 <p>
@@ -114,7 +114,7 @@ p:
 
 <div class="org-src-container">
 
-<pre class="src src-ipython"><span style="color: #0050d7;">pm</span>.<span style="color: #2b5100;">autocorrplot</span><span style="color: #707183;">(</span><span style="color: #003ccb;">trace</span><span style="color: #7388D6;">[</span><span style="color: #005d43;">burnin</span>::<span style="color: #551db6;">thin</span><span style="color: #7388D6;">]</span>, <span style="color: #7388D6;">[</span><span style="color: #008000;">'p'</span><span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+<pre class="src src-ipython"><span style="color: #0052e9;">pm</span>.<span style="color: #275200;">autocorrplot</span><span style="color: #657b83;">(</span><span style="color: #003cdb;">trace</span><span style="color: #2aa198;">[</span><span style="color: #005e43;">burnin</span>::<span style="color: #5312c3;">thin</span><span style="color: #2aa198;">]</span>, <span style="color: #2aa198;">[</span><span style="color: #2aa198;">'p'</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
 
