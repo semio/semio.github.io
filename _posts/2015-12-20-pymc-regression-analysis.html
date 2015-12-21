@@ -123,8 +123,8 @@ Sampling&#x2026;&#x2026;Done!
 
 <pre class="src src-ipython"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Data</span>
 <span style="color: #a60000;">x</span> = <span style="color: #335000;">np</span>.<span style="color: #b90064;">linspace</span><span style="color: #657b83;">(</span><span style="color: #268bd2;">0</span>, <span style="color: #268bd2;">20</span>, <span style="color: #268bd2;">20</span><span style="color: #657b83;">)</span>
-<span style="color: #005b00;">a</span>, <span style="color: #006080;">b</span> = <span style="color: #268bd2;">3</span>, <span style="color: #268bd2;">5</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#38656;&#35201;&#20272;&#35745;&#30340;&#21442;&#25968;</span>
-<span style="color: #00609b;">y</span> = <span style="color: #005b00;">a</span> * <span style="color: #a60000;">x</span> + <span style="color: #006080;">b</span> + <span style="color: #93009e;">stats</span>.<span style="color: #0d5400;">t</span>.<span style="color: #006097;">rvs</span><span style="color: #657b83;">(</span><span style="color: #7e2f00;">df</span>=<span style="color: #268bd2;">1</span>, <span style="color: #b90009;">scale</span>=<span style="color: #268bd2;">3</span>, <span style="color: #6b00b9;">size</span>=<span style="color: #335000;">np</span>.<span style="color: #6b00b9;">size</span><span style="color: #2aa198;">(</span><span style="color: #a60000;">x</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<span style="color: #005b00;">a</span>, <span style="color: #006080;">b</span> = <span style="color: #268bd2;">5</span>, <span style="color: #268bd2;">3</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#38656;&#35201;&#20272;&#35745;&#30340;&#21442;&#25968;</span>
+<span style="color: #00609b;">y</span> = <span style="color: #006080;">b</span> * <span style="color: #a60000;">x</span> + <span style="color: #005b00;">a</span> + <span style="color: #93009e;">stats</span>.<span style="color: #0d5400;">t</span>.<span style="color: #006097;">rvs</span><span style="color: #657b83;">(</span><span style="color: #7e2f00;">df</span>=<span style="color: #268bd2;">1</span>, <span style="color: #b90009;">scale</span>=<span style="color: #268bd2;">3</span>, <span style="color: #6b00b9;">size</span>=<span style="color: #335000;">np</span>.<span style="color: #6b00b9;">size</span><span style="color: #2aa198;">(</span><span style="color: #a60000;">x</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
 
 <span style="color: #075400;">plt</span>.<span style="color: #be004e;">plot</span><span style="color: #657b83;">(</span><span style="color: #a60000;">x</span>, <span style="color: #00609b;">y</span>, <span style="color: #2aa198;">'.'</span><span style="color: #657b83;">)</span>
 <span style="color: #075400;">plt</span>.<span style="color: #005c0a;">xlim</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>-<span style="color: #268bd2;">10</span>, <span style="color: #268bd2;">30</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
@@ -147,9 +147,9 @@ alpha 和 beta 的先验均值为 0，但现在这个简单模型，可以从上
 <div class="org-src-container">
 
 <pre class="src src-ipython"><span style="color: #859900;">with</span> <span style="color: #0052e9;">pm</span>.<span style="color: #0045e2;">Model</span><span style="color: #657b83;">()</span> <span style="color: #859900;">as</span> <span style="color: #0059e8;">linreg</span>:
-    <span style="color: #00608a;">ma</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'alpha'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #268bd2;">4</span>, <span style="color: #005e51;">sd</span>=<span style="color: #268bd2;">2</span><span style="color: #657b83;">)</span>
-    <span style="color: #c0003d;">mb</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'beta'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #268bd2;">7</span>, <span style="color: #005e51;">sd</span>=<span style="color: #268bd2;">2</span><span style="color: #657b83;">)</span>
-    <span style="color: #0038d8;">mu</span> = <span style="color: #00608a;">ma</span> * <span style="color: #a60000;">x</span> + <span style="color: #c0003d;">mb</span>
+    <span style="color: #0045e2;">alpha</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'alpha'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #268bd2;">7</span>, <span style="color: #005e51;">sd</span>=<span style="color: #268bd2;">2</span><span style="color: #657b83;">)</span>
+    <span style="color: #b70000;">beta</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #0060d2;">Normal</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'beta'</span>, <span style="color: #0038d8;">mu</span>=<span style="color: #268bd2;">2</span>, <span style="color: #005e51;">sd</span>=<span style="color: #268bd2;">2</span><span style="color: #657b83;">)</span>
+    <span style="color: #0038d8;">mu</span> = <span style="color: #b70000;">beta</span> * <span style="color: #a60000;">x</span> + <span style="color: #0045e2;">alpha</span>
     <span style="color: #0049e5;">nuMinusOne</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #2726cc;">Exponential</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'nu'</span>, <span style="color: #6f00b7;">lam</span>=<span style="color: #268bd2;">1</span><span style="color: #657b83;">)</span>
     <span style="color: #0044e1;">nu</span> = <span style="color: #0049e5;">nuMinusOne</span> + <span style="color: #268bd2;">1</span>
     <span style="color: #6f00b7;">lam</span> = <span style="color: #0052e9;">pm</span>.<span style="color: #005900;">Uniform</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'lam'</span>, <span style="color: #268bd2;">0</span>, <span style="color: #268bd2;">10</span><span style="color: #657b83;">)</span>
@@ -172,7 +172,7 @@ alpha 和 beta 的先验均值为 0，但现在这个简单模型，可以从上
 </div>
 
 <p>
-看看结果，注意 a 和 b 的实际值为 3 和 5
+看看结果，注意 a 和 b 的实际值为 5 和 3
 </p>
 
 <div class="org-src-container">
@@ -187,13 +187,13 @@ alpha:
   Mean             SD               MC Error         95% HPD interval
   -------------------------------------------------------------------
   
-  3.034            0.146            nan              [2.803, 3.367]
+  5.320            1.870            nan              [2.114, 9.089]
 
   Posterior quantiles:
   2.5            25             50             75             97.5
   |--------------|==============|==============|--------------|
   
-  2.803          2.943          3.037          3.137          3.367
+  2.319          4.181          4.991          6.765          9.403
 
 
 beta:
@@ -201,13 +201,13 @@ beta:
   Mean             SD               MC Error         95% HPD interval
   -------------------------------------------------------------------
   
-  5.618            1.563            nan              [2.321, 8.670]
+  3.116            0.149            nan              [2.852, 3.427]
 
   Posterior quantiles:
   2.5            25             50             75             97.5
   |--------------|==============|==============|--------------|
   
-  2.321          4.744          5.780          6.721          8.670
+  2.852          3.027          3.117          3.218          3.427
 </pre>
 
 <p>
@@ -216,11 +216,11 @@ beta:
 
 <div class="org-src-container">
 
-<pre class="src src-ipython"><span style="color: #0045e2;">alpha</span> = <span style="color: #0060cf;">trace_linreg</span><span style="color: #657b83;">[</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">100</span><span style="color: #657b83;">][</span><span style="color: #2aa198;">'alpha'</span><span style="color: #657b83;">]</span>
-<span style="color: #b70000;">beta</span> = <span style="color: #0060cf;">trace_linreg</span><span style="color: #657b83;">[</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">100</span><span style="color: #657b83;">][</span><span style="color: #2aa198;">'beta'</span><span style="color: #657b83;">]</span>
+<pre class="src src-ipython"><span style="color: #005d22;">a_p</span> = <span style="color: #0060cf;">trace_linreg</span><span style="color: #657b83;">[</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">100</span><span style="color: #657b83;">][</span><span style="color: #2aa198;">'alpha'</span><span style="color: #657b83;">]</span>
+<span style="color: #005de3;">b_p</span> = <span style="color: #0060cf;">trace_linreg</span><span style="color: #657b83;">[</span><span style="color: #268bd2;">2000</span>::<span style="color: #268bd2;">100</span><span style="color: #657b83;">][</span><span style="color: #2aa198;">'beta'</span><span style="color: #657b83;">]</span>
 <span style="color: #005900;">x_p</span> = <span style="color: #335000;">np</span>.<span style="color: #b90064;">linspace</span><span style="color: #657b83;">(</span>-<span style="color: #268bd2;">3</span>, <span style="color: #268bd2;">23</span><span style="color: #657b83;">)</span>
-<span style="color: #859900;">for</span> <span style="color: #544800;">i</span> <span style="color: #859900;">in</span> <span style="color: #6c71c4;">range</span><span style="color: #657b83;">(</span><span style="color: #6c71c4;">len</span><span style="color: #2aa198;">(</span><span style="color: #0045e2;">alpha</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>:
-    <span style="color: #00608b;">y_p</span> = <span style="color: #0045e2;">alpha</span><span style="color: #657b83;">[</span><span style="color: #544800;">i</span><span style="color: #657b83;">]</span> * <span style="color: #005900;">x_p</span> + <span style="color: #b70000;">beta</span><span style="color: #657b83;">[</span><span style="color: #544800;">i</span><span style="color: #657b83;">]</span>
+<span style="color: #859900;">for</span> <span style="color: #544800;">i</span> <span style="color: #859900;">in</span> <span style="color: #6c71c4;">range</span><span style="color: #657b83;">(</span><span style="color: #6c71c4;">len</span><span style="color: #2aa198;">(</span><span style="color: #005d22;">a_p</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>:
+    <span style="color: #00608b;">y_p</span> = <span style="color: #005de3;">b_p</span><span style="color: #657b83;">[</span><span style="color: #544800;">i</span><span style="color: #657b83;">]</span> * <span style="color: #005900;">x_p</span> + <span style="color: #005d22;">a_p</span><span style="color: #657b83;">[</span><span style="color: #544800;">i</span><span style="color: #657b83;">]</span>
     <span style="color: #075400;">plt</span>.<span style="color: #be004e;">plot</span><span style="color: #657b83;">(</span><span style="color: #005900;">x_p</span>, <span style="color: #00608b;">y_p</span>, <span style="color: #2aa198;">'k'</span>, <span style="color: #0045e2;">alpha</span>=.<span style="color: #268bd2;">03</span><span style="color: #657b83;">)</span>
 
 <span style="color: #075400;">plt</span>.<span style="color: #be004e;">plot</span><span style="color: #657b83;">(</span><span style="color: #a60000;">x</span>, <span style="color: #00609b;">y</span>, <span style="color: #2aa198;">'.'</span><span style="color: #657b83;">)</span>
@@ -340,13 +340,13 @@ beta0:
   Mean             SD               MC Error         95% HPD interval
   -------------------------------------------------------------------
   
-  5.371            0.551            0.060            [4.342, 6.408]
+  5.238            0.602            0.056            [4.122, 6.366]
 
   Posterior quantiles:
   2.5            25             50             75             97.5
   |--------------|==============|==============|--------------|
   
-  4.227          5.009          5.397          5.792          6.400
+  4.134          4.864          5.226          5.688          6.456
 
 
 beta1:
@@ -354,7 +354,7 @@ beta1:
   Mean             SD               MC Error         95% HPD interval
   -------------------------------------------------------------------
   
-  0.392            0.035            0.003            [0.327, 0.453]
+  0.384            0.038            0.004            [0.308, 0.456]
   0.010            0.001            0.000            [0.009, 0.011]
   0.000            0.000            0.000            [0.000, 0.000]
 
@@ -362,8 +362,8 @@ beta1:
   2.5            25             50             75             97.5
   |--------------|==============|==============|--------------|
   
-  0.329          0.363          0.392          0.417          0.456
-  0.009          0.010          0.010          0.010          0.012
+  0.308          0.361          0.383          0.410          0.456
+  0.009          0.010          0.010          0.011          0.011
   0.000          0.000          0.000          0.000          0.000
 </pre>
 
