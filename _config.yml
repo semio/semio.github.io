@@ -3,7 +3,7 @@ description: Collection of My Thoughts
 meta_description: "Blogging about Technologies, Stock Market/Trading."
 
 markdown: redcarpet
-highlighter: pygments
+highlighter: rouge
 logo: false
 paginate: 5
 baseurl: /
