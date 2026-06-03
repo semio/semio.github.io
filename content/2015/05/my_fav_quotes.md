@@ -4,9 +4,8 @@ slug: "my-favourite-investing-quotes"
 date: 2015-05-24
 categories: ["闻"]
 tags: ["quotes"]
+type: blog
 ---
-
-# 我喜爱的投资语录
 
 这两天在翻以前看过的跟股票市场相关的书籍，又重新看到很多经典的和自己做过标注的语录。在这里整理成文，供以后温习。 
 

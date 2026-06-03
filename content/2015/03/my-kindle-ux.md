@@ -4,9 +4,8 @@ draft = false
 title = 'Kindle 使用体验'
 tags = ['tools']
 categories = ['思']
+type = 'blog'
 +++
-
-# Kindle 使用体验
 
 最近买书的时候，发现想买的几本书都有 Kindle 版本。估计近期的新书大部分都会有 Kindle 版本了，我决定入手一部 Kindle。因为是第一次用 Kindle，所以我考虑再三以后选择了 499 的版本。入手几周了，它给我的总体感觉是非常不错的。
 
