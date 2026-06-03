@@ -6,8 +6,8 @@ author = 'Semio Zheng'
 copyright = "Copyright © 2026, Semio Zheng."
 
 # Generate "Bearblog"-like URLs !only!, see https://bearblog.dev/.
-disableKinds = ["taxonomy"]
-ignoreErrors = ["error-disable-taxonomy"]
+# disableKinds = ["taxonomy"]
+# ignoreErrors = ["error-disable-taxonomy"]
 
 # Enable useful features
 enableRobotsTXT = true
@@ -64,22 +64,22 @@ buildExpired = false
   [[menu.main]]
     identifier = "hear"
     name = "闻"
-    url = "/categories/hear"
+    url = "/categories/闻/"
     weight = 1
   [[menu.main]]
     identifier = "ponder"
     name = "思"
-    url = "/categories/ponder"
+    url = "/categories/思/"
     weight = 2
   [[menu.main]]
     identifier = "cultivate"
     name = "修"
-    url = "/categories/cultivate"
+    url = "/categories/修/"
     weight = 3
   [[menu.main]]
-    identifier = "archives"
-    name = "归档"
-    url = "/archives/"
+    identifier = "blog"
+    name = "全部文章"
+    url = "/blog/"
     weight = 10
 
 [caches]
