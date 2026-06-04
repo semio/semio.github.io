@@ -5,7 +5,7 @@ url = "/blog/2026/06/04/chan-lun-game-0/"
 tags = ["缠论"]
 categories = ["修"]
 type = "blog"
-draft = false
+draft = true
 +++
 
 在我心中，技术分析中的缠论就像是编程语言中的 Haskell 一样：一种与众不同的范式，简洁优雅的语言，处理复杂系统的能力，还有难学 :)。也和我学习 Haskell 一样，我用了很长时间学习缠论。
